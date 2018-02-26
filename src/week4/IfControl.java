@@ -19,7 +19,7 @@ public class IfControl {
         // TODO code application logic here
         
         double purchaseAmount = 0;
-        double difference = 0;
+        double difference;
 
         Scanner userInputScanner = new Scanner(System.in);
         System.out.print("What is the amount you can afford?  $");
