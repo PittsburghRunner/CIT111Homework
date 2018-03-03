@@ -10,10 +10,10 @@ import java.util.Random;
 
 public class MathProblem {
 
-    private static final int MAX_VALUE = 10;
+    private static final int MAX_VALUE = 30;
     private static final int MAX_TRYS = 2;
     private static final int QUESTIONS_TO_ASK = 3;
-    private static final int SCORE_TO_BEAT = 3;
+    private static final int SCORE_TO_BEAT = 2;
 
     private static int score = 0;
 
@@ -32,7 +32,7 @@ public class MathProblem {
         find out if the student passed.
          */
         if (score > (QUESTIONS_TO_ASK * SCORE_TO_BEAT)) {
-            System.out.println("Great Job! You scored: " + score + "out of " + (QUESTIONS_TO_ASK * (SCORE_TO_BEAT + 1)) + "points!");
+            System.out.println("Great Job! You scored: " + score + " out of " + (QUESTIONS_TO_ASK * (SCORE_TO_BEAT)) + " points!");
         } else {
             System.out.println("Sorry! Try the quiz again after you've studied.");
         }
@@ -45,13 +45,13 @@ public class MathProblem {
         Random aRand = new Random();
         Random bRand = new Random();
 
-        int a = aRand.nextInt(MAX_VALUE) + 1;
-        int b = bRand.nextInt(MAX_VALUE) + 1;
+        int a = aRand.nextInt(MAX_VALUE) + 1; //get a randdom value of a
+        int b = bRand.nextInt(MAX_VALUE) + 1; //get a random value of b
 
         int answerInput;
         int answerAttempts = 0;
 
-        int questionScore = MAX_TRYS + 1;
+        int questionScore = MAX_TRYS;
 
         Scanner userInputScanner = new Scanner(System.in);
 
