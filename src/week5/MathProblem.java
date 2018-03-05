@@ -11,12 +11,11 @@ import java.util.Random;
 public class MathProblem {
 
     private static final int MAX_VALUE = 30;
-    private static final int MAX_TRYS = 2;
-    private static final int QUESTIONS_TO_ASK = 3;
-    private static final int SCORE_TO_BEAT = 2;
+    private static final int MAX_TRIES = 2;
+    private static final int QUESTIONS_TO_ASK = 10;
 
     private static int score = 0;
-
+    private static double scorePercent = 0.0;
     private static int currentQuestion = 1;
 
     /**
@@ -24,6 +23,7 @@ public class MathProblem {
      */
     public static void main(String[] args) {
         System.out.println("Welcome to math quiz!");
+        System.out.println("There are " + QUESTIONS_TO_ASK + " questions in this quiz.");
         while (currentQuestion <= QUESTIONS_TO_ASK) {
             askAQuestion(); //call the method below to ask a question
             currentQuestion++; //incriment the question
@@ -31,11 +31,14 @@ public class MathProblem {
         /*
         find out if the student passed.
          */
-        if (score > (QUESTIONS_TO_ASK * SCORE_TO_BEAT)) {
-            System.out.println("Great Job! You scored: " + score + " out of " + (QUESTIONS_TO_ASK * (SCORE_TO_BEAT)) + " points!");
-        } else {
-            System.out.println("Sorry! Try the quiz again after you've studied.");
+        scorePercent = ((double)score/(double)(QUESTIONS_TO_ASK*(MAX_TRIES))*100);
+        
+        if (scorePercent == 100) {
+            System.out.println("Great Job! Perfect Score! You scored: " + score + " out of " + (QUESTIONS_TO_ASK * (MAX_TRIES)) + " points!");
+        } else if (scorePercent >= 90) {
+            System.out.println("Good Job! You scored: " + score + " out of " + (QUESTIONS_TO_ASK * (MAX_TRIES)) + " points!");
         }
+        System.out.println("You scored " + scorePercent + "%!");
 
     } //close method
 /*
@@ -49,16 +52,14 @@ public class MathProblem {
         int b = bRand.nextInt(MAX_VALUE) + 1; //get a random value of b
 
         int answerInput;
-        int answerAttempts = 0;
+        int questionScore = MAX_TRIES;
 
-        int questionScore = MAX_TRYS;
 
-        Scanner userInputScanner = new Scanner(System.in);
-
-        while (answerAttempts < MAX_TRYS) {
+        while (questionScore != 0) {
 
             System.out.print(currentQuestion + ". What is " + a + " + " + b + "? ");
             try {
+                Scanner userInputScanner = new Scanner(System.in);
                 answerInput = userInputScanner.nextInt();
             } catch (Exception e) {
                 answerInput = 0;
@@ -69,10 +70,9 @@ public class MathProblem {
             } else {
                 System.out.println("Wrong Answer.");
                 questionScore--;
-                answerAttempts++;
-                System.out.println("You have " + (MAX_TRYS - answerAttempts) + " more trys.");
+                System.out.println("You have " + questionScore + " more try(s).");
             } //close if else
-            if (answerAttempts == MAX_TRYS) {
+            if (questionScore == 0) {
                 System.out.println("Sorry you've reached your max tries!");
             }
 
