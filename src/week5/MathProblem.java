@@ -44,7 +44,7 @@ public class MathProblem {
 /*
     ask a math addition question
      */
-    private static void askAQuestion() {
+    public static void askAQuestion() {
         Random aRand = new Random();
         Random bRand = new Random();
 
