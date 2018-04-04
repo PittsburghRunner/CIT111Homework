@@ -16,11 +16,13 @@ public class KennywoodRideTracker {
     private static final int THRILL_RIDE_MIN_HEIGHT = 52;
     private static final int THEME_RIDE_MIN_HEIGHT = 46;
 
-    private static final int THRILL_RIDE_MAX_RIDERS = 40;
-    private static final int THEME_RIDE_MAX_RIDERS = 80;
+    private static final int THRILL_RIDE_MAX_RIDERS = 40;//max 40 riders
+    private static final int THEME_RIDE_MAX_RIDERS = 80;//max 80 riders 4 Rows, 72 animals (20 stationary, 50 jumpers, 1 lion, 1 tiger; 4 chariots as well)
 
-    private static final int MIN_RIDER_HEIGHT = 37;
-    private static final int MAX_RIDER_HEIGHT = 80;
+    private static final int MIN_RIDERS = 10; //minimum riders to start a ride;
+
+    private static final int MIN_RIDER_HEIGHT = 37; //minimums rider height for random height generator
+    private static final int MAX_RIDER_HEIGHT = 80; //maximum rider height for random height generator
 
     private static final int RIDE_GROUPS = 20;
 
@@ -28,15 +30,20 @@ public class KennywoodRideTracker {
     private static int totalFailedRideAttempts = 0;
     private static int totalSickRiders = 0;
 
+    /**
+     * Main!
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         for (int numLoops = 0; numLoops <= RIDE_GROUPS; numLoops++) {
-            rideBlackWidow(randomRiders(THRILL_RIDE_MAX_RIDERS), randomRiderHeight()); //max 40 riders
-            rideMerryGoRound(randomRiders(THEME_RIDE_MAX_RIDERS), randomRiderHeight()); //max 80 riders 4 Rows, 72 animals (20 stationary, 50 jumpers, 1 lion, 1 tiger; 4 chariots as well)
+            rideBlackWidow(randomNumRiders(THRILL_RIDE_MAX_RIDERS), randomRiderHeight());
+            rideMerryGoRound(randomNumRiders(THEME_RIDE_MAX_RIDERS), randomRiderHeight());
             printRideStats();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000); //sleep between loops
             } catch (InterruptedException e) {
                 System.out.println("Interuppted Exception: " + e);
             }
@@ -44,6 +51,12 @@ public class KennywoodRideTracker {
 
     }  //close main
 
+    /**
+     * ride the black widow!
+     *
+     * @param riders number of riders
+     * @param avgHeight their average height
+     */
     public static void rideBlackWidow(int riders, int avgHeight) {
 
         if (avgHeight >= THRILL_RIDE_MIN_HEIGHT) {
@@ -68,6 +81,12 @@ public class KennywoodRideTracker {
         System.out.println("");
     } //close rideBlackWidow
 
+    /**
+     * ride the merry-go-round!
+     *
+     * @param riders number of riders
+     * @param avgHeight their average height
+     */
     public static void rideMerryGoRound(int riders, int avgHeight) {
         if (avgHeight >= THEME_RIDE_MIN_HEIGHT) {
             System.out.println(riders + " riders are riding Merry-Go-Round...");
@@ -102,15 +121,26 @@ public class KennywoodRideTracker {
 
     } //close printRideStats
 
+    /**
+     * Generates a random rider height and returns it.
+     *
+     * @return
+     */
     private static int randomRiderHeight() {
         Random rand = new Random();
         int randomRiderHeight = rand.nextInt(MAX_RIDER_HEIGHT - MIN_RIDER_HEIGHT + 1) + MIN_RIDER_HEIGHT;
         return randomRiderHeight;
     } //close randomRiderHeight
 
-    private static int randomRiders(int maxRiders) {
+    /**
+     * Generates a random number of riders for a group and returns it.
+     *
+     * @param maxRiders
+     * @return randomRiders
+     */
+    private static int randomNumRiders(int maxRiders) {
         Random rand = new Random();
-        int randomRiders = rand.nextInt(maxRiders - 10) + 10;
+        int randomRiders = rand.nextInt(maxRiders - MIN_RIDERS) + MIN_RIDERS;
         return randomRiders;
     } //close randomRiderHeight
 
