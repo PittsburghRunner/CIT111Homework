@@ -60,6 +60,8 @@ public class PointOfSaleSystem {
             System.out.println("7 - ViewCart");
             System.out.println("8 - Checkout");
             System.out.println("10 - View Inventory");
+            System.out.println("11 - View Total Revenue");
+
             System.out.println("9 - To Exit");
 
             System.out.print("Type your choice and press enter: ");
@@ -107,6 +109,9 @@ public class PointOfSaleSystem {
                     break;
                 case 10:
                     checkInventory();
+                    break;
+                case 11:
+                    checkToalRevenue();
                     break;
 
                 default:
@@ -259,5 +264,14 @@ public class PointOfSaleSystem {
         }
 
     }//close printInventoryItem
+
+    private static void checkToalRevenue() {
+        System.out.println("******************************");
+        System.out.println("******************************");
+        System.out.println("Total Revenue: $" + totalRevenue);
+        System.out.println("******************************");
+        System.out.println("******************************");
+
+    }
 
 }//close PointOfSaleSystem
