@@ -11,27 +11,28 @@ package objects2_creatures;
  */
 public class SizedDonut {
     //member variables
+
     public String name;
     public int sizeInmm;
-    
+    public int donutId;
+
     private int percRemaining = 100;
-    
-    public void simulateEating(int percentEaten){
-        System.out.println("Eating Donut!");
-        if(percRemaining - percentEaten >= 0 ){
-          percRemaining = percRemaining - percentEaten;
+
+    public void simulateEating(int percentEaten) {
+        if (percRemaining - percentEaten >= 0) {
+            percRemaining = percRemaining - percentEaten;
         } else {
-            percRemaining =  0;
+            percRemaining = 0;
         }
-        
+
     }//close method
-    
-    public int getPercRamaining(){
+
+    public int getPercRamaining() {
         return percRemaining;
     }//close method;
-    
-    public boolean isNotDevoured(){
-        if (percRemaining == 0){
+
+    public boolean isNotDevoured() {
+        if (percRemaining == 0) {
             return false;
         }
         return true;
