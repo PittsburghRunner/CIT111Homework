@@ -41,12 +41,15 @@ public class Creature {
     //Method to simulate eating a donut
     public int eatDonut(SizedDonut donutToEat) {
         System.out.println(name + " is eating a  " + donutToEat.name + " donut.");
-        
+
         while (donutToEat.isNotDevoured()) {
             donutToEat.simulateEating(biteSizeInPercent);
+            System.out.println(name + " took a bite of the " + donutToEat.name + " donut.");
             chew(timeToTakeBiteInSeconds);
             System.out.println("Percent of " + donutToEat.name + "(" + donutToEat.donutId + ")" + " Donut Left: " + donutToEat.getPercRamaining());
             numBitesTaken++;
+            System.out.println(name + " swallowed a bite donut.");
+
         }
         System.out.println("Donut gone!");
         isWinner = imDone(name);
@@ -89,14 +92,11 @@ public class Creature {
 
     public static void chew(int timeInSeconds) {
         int timeInms = (timeInSeconds * 1000);
-        System.out.println("Chewing");
         try {
             Thread.sleep(timeInms);
         } catch (InterruptedException e) {
             System.out.println("Interuppted Exception: " + e);
         }
-        System.out.println("Bite Swallowed");
-
     }
 
 }//close class
