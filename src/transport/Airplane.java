@@ -23,13 +23,16 @@ package transport;
  */
 public class Airplane {
 
-    private static int totalMilesFlown = 0;
+    private int totalMilesFlown = 0;
+    private int totalPassengerMiles = 0;
+    private int totalPassengers = 0;
 
-    public void flyAirplane(int miles) {
+    public void flyAirplane(int miles, int passengers) {
         //a plane cannot fly negative miles
         if (miles > 0) {
-            System.out.println("Flying Airplane " + miles + " mile" + ((miles > 1) ? "s" : "") + ".");
+            System.out.println("Flying Airplane " + miles + " mile" + ((miles > 1) ? "s" : "") + " with " + passengers + " passenger" + ((passengers > 1) ? "s" : "") + " on board.");
             totalMilesFlown = totalMilesFlown + miles;
+            totalPassengerMiles = totalPassengerMiles + (miles * passengers);
         } //close if
         else {
             System.out.println("Error: Distance cannot be negative.");
@@ -37,9 +40,30 @@ public class Airplane {
 
     }//close method
 
-    public void displayTotalMilesFlown() {
+    public int displayTotalMilesFlown() {
         //print the total miles flown
         System.out.println("Total Miles Flown: " + totalMilesFlown);
+        return totalMilesFlown;
     }//close method
 
+    public int displayPassengerMiles() {
+        //print the total passenger miles flown
+        System.out.println("Total Passenger Miles Flown: " + totalPassengerMiles);
+        return totalPassengerMiles;
+    }//close method
+
+    public void checkLegalRegion() {
+        String region;
+        //less than 10 million miles
+        if (this.totalMilesFlown <= 10000000) {
+            region = "North America";
+            //less than 20 million miles
+        } else if (this.totalMilesFlown <= 20000000) {
+            region = "SouthEast Asia";
+            //over 20 million miles
+        } else {
+            region = "Africa";
+        }
+        System.out.println("Legal region: " + region);
+    }
 }//close class

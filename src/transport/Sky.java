@@ -26,15 +26,25 @@ public class Sky {
     public static void main(String[] args) {
 
         // creating flight1810
-        Airplane flight1810 = new Airplane();
+        Airplane serialN947JB = new Airplane();
 
-        //flying airplane 8000 miles.
-        flight1810.flyAirplane(8000);
+        while (serialN947JB.displayTotalMilesFlown() < 21000000) {
+            //flying airplane 8000 miles.
+            serialN947JB.flyAirplane(8000, 189);
 
-        //flying airplane 500 miles.
-        flight1810.flyAirplane(500);
+            //flying airplane 500 miles.
+            serialN947JB.flyAirplane(5000, 300);
 
-        //display total miles flown
-        flight1810.displayTotalMilesFlown();
+            //flying airplane 10000 miles.
+            serialN947JB.flyAirplane(100000, 43);
+
+            //flying airplane 500 miles.
+            serialN947JB.flyAirplane(5000, 290);
+
+            //check legal region.
+            serialN947JB.checkLegalRegion();
+        }//close while
+        
+        serialN947JB.displayPassengerMiles();
     }//close main
 }//close class
