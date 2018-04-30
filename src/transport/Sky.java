@@ -28,12 +28,13 @@ public class Sky {
         // creating flight1810
         Airplane serialN947JB = new Airplane();
 
-        while (serialN947JB.displayTotalMilesFlown() < 21000000) {
-            //flying airplane 8000 miles.
-            serialN947JB.flyAirplane(8000, 189);
+        //simulating flights until miles hits 21000000
+        while (serialN947JB.displayTotalMilesFlown() <= 21000000) {
+            //flying airplane 80000 miles.
+            serialN947JB.flyAirplane(80000, 189);
 
-            //flying airplane 500 miles.
-            serialN947JB.flyAirplane(5000, 300);
+            //flying airplane 5000 miles.
+            serialN947JB.flyAirplane(50000, 300);
 
             //flying airplane 10000 miles.
             serialN947JB.flyAirplane(100000, 43);
