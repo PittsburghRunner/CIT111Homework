@@ -29,13 +29,14 @@ public class Airplane {
 
     public void flyAirplane(int miles, int passengers) {
         //a plane cannot fly negative miles
-        if (miles > 0) {
+        if (miles >= 0 && passengers >=0 ) {
             System.out.println("Flying Airplane " + miles + " mile" + ((miles > 1) ? "s" : "") + " with " + passengers + " passenger" + ((passengers > 1) ? "s" : "") + " on board.");
             totalMilesFlown = totalMilesFlown + miles;
             totalPassengerMiles = totalPassengerMiles + (miles * passengers);
+            totalPassengers = totalPassengers + passengers;
         } //close if
         else {
-            System.out.println("Error: Distance cannot be negative.");
+            System.out.println("Error: Number cannot be negative.");
         }//close else
 
     }//close method
@@ -49,6 +50,12 @@ public class Airplane {
     public int displayPassengerMiles() {
         //print the total passenger miles flown
         System.out.println("Total Passenger Miles Flown: " + totalPassengerMiles);
+        return totalPassengerMiles;
+    }//close method
+    
+    public int displayTotalPassengers() {
+        //print the total passenger miles flown
+        System.out.println("Total Passengers: " + totalPassengers);
         return totalPassengerMiles;
     }//close method
 
