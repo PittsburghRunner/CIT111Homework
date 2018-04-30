@@ -31,7 +31,7 @@ public class CreatureLand {
         Creature turtle = new Creature();
         turtle.name = "Crush";
         turtle.species = "Sea Turle";
-        turtle.setBiteSizeInPercent(5);
+        turtle.setBiteSizeInPercent(20);
         turtle.setSizeLimit(60);
         turtle.setTimeToTakeBiteInSeconds(1);
 
@@ -51,7 +51,7 @@ public class CreatureLand {
         penguin.species = "Blob Fish";
         penguin.setSizeLimit(20);
         penguin.setBiteSizeInPercent(20);
-        penguin.setTimeToTakeBiteInSeconds(2);
+        penguin.setTimeToTakeBiteInSeconds(1);
 
         SizedDonut donutForPenguin = new SizedDonut();
         donutForPenguin.donutId = 456;
