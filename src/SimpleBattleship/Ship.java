@@ -22,26 +22,54 @@ package SimpleBattleship;
  * @author christopher.eckles
  */
 public class Ship {
-private int shipSize = 0;
-private int shipStartLocation = 0;
-private Boolean isSank = false;
-private static int shipStatus[];
 
-public int getShipSize(){
-    return this.shipSize;
+    private int shipSize = 0;
+    private int shipStartLocation = 0;
+    private int shipStatus[];
+    //TODO: Direction
+
+    public int getShipSize() {
+        return this.shipSize;
+    }
+
+    public void setShipSize(int size) {
+        this.shipSize = size;
+        this.shipStatus = new int[size];
+        for (int i = 0; i < shipStatus.length; i++) {
+            shipStatus[i] = 2;
+        }
+
+    }
+
+    public int getShipStartLocation() {
+        return this.shipStartLocation;
+    }
+
+    public void setShipStartLocation(int size) {
+        this.shipStartLocation = size;
+    }
+
+    public Boolean isSank() {
+        for (int i = 0; i < shipStatus.length; i++) {
+            if (shipStatus[i] != 3) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
 }
 
-public void setShipSize(int size){
-    this.shipSize = size;
-    this.shipStatus = new int[size];
-}
 
-public int getShipStartLocation(){
-    return this.shipStartLocation;
-}
+/**Ship
+int shipSize
+int shipStartLocation
+Boolean isSank
+Array sectionsHit
 
-public void setShipStartLocation(int size){
-    this.shipStartLocation = size;
-}
+buildShip
+isSank
+checkLocation
 
-}
+*/

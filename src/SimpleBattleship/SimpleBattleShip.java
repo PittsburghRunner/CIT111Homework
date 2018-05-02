@@ -26,25 +26,26 @@ public class SimpleBattleShip {
     public static final int BOARD_SIZE = 100;
     public static final int SHIP_SIZES[] = {2, 3, 3, 4, 5};
 
-    public static int shipsSank = 0;
-    public static Ship ships[];
-    public static Board board;
+    public static int shipsLeft = SHIP_SIZES.length;
+    public Ship[] fleet = new Ship[SHIP_SIZES.length];
+    public Board board;
 
-    public static Boolean buildBoard() {
+    public Boolean buildBoard() {
         // build board 
         board.setBoardSize(BOARD_SIZE);
 
         // place ship(){
-        for (int shipSize :SHIP_SIZES){
+        for (int i = 0; i < SHIP_SIZES.length; i++) {
             Ship ship = new Ship();
-            
-            ship.
+            ship.setShipSize(SHIP_SIZES[i]);
+//TODO: set location 
+            fleet[i] = ship;
         }
         return true;
     }
 
     public Boolean isGameOver() {
-        if (SHIP_SIZES.length + 1 == shipsSank) {
+        if (SHIP_SIZES.length + 1 == shipsLeft) {
             return true;
         }
         return false;

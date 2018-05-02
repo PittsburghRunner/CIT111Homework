@@ -24,26 +24,46 @@ package SimpleBattleship;
 public class Board {
 
     private static int board[];
+    //TODO: multidimentional array
 
     public void setBoardSize(int size) {
         board = new int[size];
     }
-    
+
     public int getLocationStatus(int location) {
         int status = 0;
-        if (board.length+1 < location){
-            status = board[location-1];
+        if (board.length + 1 < location) {
+            status = board[location - 1];
         }
         return status;
     }
 
     public Boolean setLocationStatus(int location, int status) {
-        if (true) {
-            //guts here  
-            
+        if (board[location] == 0) {
+            board[location] = status;
+            return true;
         }
         return false;
     }
 
-
+    public Boolean setShipLocation(int location, int size) {
+        for (int i = location - 1; i < location - 1 + size; i++) {
+            if (getLocationStatus(location) != 0) {
+                return false;
+            }
+        }
+        for (int i = location - 1; i < location - 1 + size; i++) {
+            setLocationStatus(i, 2);
+        }
+        return true;
+    }
 }
+/**
+ * Board FINAL BOARD_SIZE FINAL NUMBER_OF_SHIPS FINAL Array Int[] SHIP_SIZES
+ * {2,3,3,4,5}	//grant googled this for me
+ *
+ * Array Ships Int shipsSank Array board Int[]	//0 empty,1 guessed, 2 ship, 3
+ * ship hit
+ *
+ * printBoard
+ */
