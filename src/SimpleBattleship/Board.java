@@ -40,14 +40,39 @@ public class Board {
     private String boardName;
     //TODO: multidimentional array
 
-    public void setBoardSize(int size) {
+    Board(Player player) {
+        // build board 
+        setBoardSize(boardSize);
+        setBoardName(player.getPlayerName());
+        // place ship(){
+        for (int i = 0; i < SHIP_SIZES.length; i++) {
+            Ship ship = new Ship();
+            ship.setShipSize(SHIP_SIZES[i]);
+            Boolean set = false;
+            int location = 0;
+            setShipLocation(90, 10);
+
+            while (!set) {
+                int random = RandomNumber.generateRandomLocation(boardSize - ship.getShipSize() - 1);
+                if (setShipLocation(random, ship.getShipSize())) {
+                    set = true;
+                    location = random;
+                }
+            }
+            System.out.println("Location of " + (i) + " ship: " + location + " - " + (location + SHIP_SIZES[i] - 1));
+            ship.setShipStartLocation(location);
+            fleet[i] = ship;
+        }
+    }
+
+    private void setBoardSize(int size) {
         board = new String[size];
         for (int i = 0; i < size; i++) {
             board[i] = LOCATION_EMPTY;
         }
     }
 
-    public Boolean setBoardName(String boardName) {
+    private Boolean setBoardName(String boardName) {
         if (boardName.length() < 1) {
             return false;
         }
@@ -76,7 +101,7 @@ public class Board {
         return false;
     }
 
-    public Boolean setShipLocation(int location, int size) {
+    private Boolean setShipLocation(int location, int size) {
         for (int i = location; i < location + size; i++) {
 
             if (getLocationStatus(i).equals(LOCATION_SHIP)) {
@@ -86,32 +111,6 @@ public class Board {
         }
         for (int i = location; i < location + size; i++) {
             setLocationStatus(i, LOCATION_SHIP);
-        }
-        return true;
-    }
-
-    public Boolean buildBoard(String playerName) {
-        // build board 
-        setBoardSize(boardSize);
-        setBoardName(playerName);
-        // place ship(){
-        for (int i = 0; i < SHIP_SIZES.length; i++) {
-            Ship ship = new Ship();
-            ship.setShipSize(SHIP_SIZES[i]);
-            Boolean set = false;
-            int location = 0;
-            setShipLocation(90, 10);
-
-            while (!set) {
-                int random = RandomNumber.generateRandomLocation(boardSize - ship.getShipSize() - 1);
-                if (setShipLocation(random, ship.getShipSize())) {
-                    set = true;
-                    location = random;
-                }
-            }
-            System.out.println("Location of " + (i) + " ship: " + location + " - " + (location + SHIP_SIZES[i] - 1));
-            ship.setShipStartLocation(location);
-            fleet[i] = ship;
         }
         return true;
     }
@@ -128,8 +127,8 @@ public class Board {
                 boardStatus = boardStatus + LOCATION_SPACING + LOCATION_SPACING + ((i / BOARD_LATITUDE.length)) + "\n";
             }
         }
-        int borderLength = ((Double) Math.floor(BOARD_LONGITUTDE - boardName.length() / 2)).intValue();
-        System.out.println("Border Length"+borderLength);
+        int borderLength = ((Double) Math.floor(((BOARD_LATITUDE.length + (BOARD_LATITUDE.length * LOCATION_SPACING.length())) - boardName.length()) / 2)).intValue()+2;
+        System.out.println("Border Length" + borderLength);
         String border = "";
         for (int i = 0; i < borderLength; i++) {
             border = border + "*";

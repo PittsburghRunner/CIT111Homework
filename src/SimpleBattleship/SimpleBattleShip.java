@@ -17,22 +17,43 @@
  */
 package SimpleBattleship;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author christopher.eckles
  */
 public class SimpleBattleShip {
 
+    public static final int NUMBER_OF_PLAYERS = 2;
 
-    public static Board board1 = new Board();
+    private static ArrayList<Player> players = new ArrayList();
 
     public static void main(String[] args) {
-        board1.buildBoard("Player 1");
-        board1.printBoard(false);
 
-        for (Ship fleet : board1.fleet) {
-            System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
+        for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
+            String n = getUserInput("Player " + i + " Name");
+            players.add(new Player(n));
         }
 
+        for (Player player : players) {
+            int indexOf = players.indexOf(players);
+
+            player.getPlayerBoard().printBoard(true);
+
+            for (Ship fleet : player.getPlayerBoard().fleet) {
+                System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
+            }
+        }
+
+    }
+
+    private static String getUserInput(String prompt) {
+        String input = "";
+        Scanner userInputScanner = new Scanner(System.in);
+        System.out.print("Please enter your " + prompt + ": ");
+        input = userInputScanner.next();
+        return input;
     }
 }
