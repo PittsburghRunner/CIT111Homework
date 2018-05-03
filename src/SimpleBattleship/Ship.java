@@ -25,7 +25,7 @@ public class Ship {
 
     private int shipSize = 0;
     private int shipStartLocation = 0;
-    private int shipStatus[];
+    private String shipStatus[];
     //TODO: Direction
 
     public int getShipSize() {
@@ -34,9 +34,9 @@ public class Ship {
 
     public void setShipSize(int size) {
         this.shipSize = size;
-        this.shipStatus = new int[size];
+        this.shipStatus = new String[size];
         for (int i = 0; i < shipStatus.length; i++) {
-            shipStatus[i] = 2;
+            shipStatus[i] = Board.LOCATION_SHIP;
         }
 
     }
@@ -49,9 +49,21 @@ public class Ship {
         this.shipStartLocation = size;
     }
 
+    public Boolean isHit(int location) {
+
+        for (int i = 0; i < shipStatus.length; i++) {
+
+            if (i + getShipStartLocation() == location) {
+                shipStatus[i] = Board.LOCATION_HIT;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Boolean isSank() {
         for (int i = 0; i < shipStatus.length; i++) {
-            if (shipStatus[i] != 3) {
+            if (!shipStatus[i].equals(Board.LOCATION_SHIP)) {
                 return false;
             }
         }
@@ -61,15 +73,9 @@ public class Ship {
 
 }
 
-
-/**Ship
-int shipSize
-int shipStartLocation
-Boolean isSank
-Array sectionsHit
-
-buildShip
-isSank
-checkLocation
-
-*/
+/**
+ * Ship int shipSize int shipStartLocation Boolean isSank Array sectionsHit
+ *
+ * buildShip isSank checkLocation
+ *
+ */

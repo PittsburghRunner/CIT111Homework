@@ -24,14 +24,15 @@ import java.util.Random;
  * @author christopher.eckles
  */
 public class RandomNumber {
-
-    // generate a random big number
-    public int generateRandomLocation(int maxInt) {
-        // create a random number
+ 
+    // generate a random number
+    public static int generateRandomLocation(int maxInt) {
+        // create a new random number object
         Random r = new Random();
-        //create a BigInteger object to do math with huge numbers
-        int next = r.nextInt(maxInt+1);
-        //print the value
+        //create a int amd stpre tje next int insid it
+        int next = r.nextInt(maxInt);
+        //System.out.println("Random Number: " + next);
+        //return the value
         return next;
     }
 }

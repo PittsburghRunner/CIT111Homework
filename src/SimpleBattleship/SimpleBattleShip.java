@@ -23,31 +23,16 @@ package SimpleBattleship;
  */
 public class SimpleBattleShip {
 
-    public static final int BOARD_SIZE = 100;
-    public static final int SHIP_SIZES[] = {2, 3, 3, 4, 5};
 
-    public static int shipsLeft = SHIP_SIZES.length;
-    public Ship[] fleet = new Ship[SHIP_SIZES.length];
-    public Board board;
+    public static Board board1 = new Board();
 
-    public Boolean buildBoard() {
-        // build board 
-        board.setBoardSize(BOARD_SIZE);
+    public static void main(String[] args) {
+        board1.buildBoard("Player 1");
+        board1.printBoard(false);
 
-        // place ship(){
-        for (int i = 0; i < SHIP_SIZES.length; i++) {
-            Ship ship = new Ship();
-            ship.setShipSize(SHIP_SIZES[i]);
-//TODO: set location 
-            fleet[i] = ship;
+        for (Ship fleet : board1.fleet) {
+            System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
         }
-        return true;
-    }
 
-    public Boolean isGameOver() {
-        if (SHIP_SIZES.length + 1 == shipsLeft) {
-            return true;
-        }
-        return false;
     }
 }
