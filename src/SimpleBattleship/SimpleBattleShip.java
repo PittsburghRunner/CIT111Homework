@@ -28,12 +28,12 @@ public class SimpleBattleShip {
 
     public static final int NUMBER_OF_PLAYERS = 2;
 
-    private static ArrayList<Player> players = new ArrayList();
+    private static final ArrayList<Player> players = new ArrayList();
 
     public static void main(String[] args) {
 
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
-            String n = getUserInput("Player " + i + " Name");
+            String n = getUserInput("Player " + i + "'s Name", 3, Board.BOARD_LATITUDE.length);
             players.add(new Player(n));
         }
 
@@ -49,11 +49,17 @@ public class SimpleBattleShip {
 
     }
 
-    private static String getUserInput(String prompt) {
+    private static String getUserInput(String prompt, int min, int max) {
         String input = "";
         Scanner userInputScanner = new Scanner(System.in);
-        System.out.print("Please enter your " + prompt + ": ");
-        input = userInputScanner.next();
-        return input;
+        System.out.print("Please enter " + prompt + " (min:" + min + " max:" + max + "): ");
+
+        while (true) {
+            input = userInputScanner.nextLine();
+            if (input.length() >= min && input.length() <= max) {
+                return input;
+            };
+        }
+
     }
 }
