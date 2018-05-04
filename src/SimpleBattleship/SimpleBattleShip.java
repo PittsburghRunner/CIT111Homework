@@ -40,7 +40,7 @@ public class SimpleBattleShip {
         }
 
         for (Player player : players) {
-//            int indexOf = players.indexOf(player);
+            int indexOf = players.indexOf(player);
             if (SimpleBattleShip.DEBUG)System.out.println("indexOf" + indexOf);
             player.getPlayerBoard().printBoard(true);
 
