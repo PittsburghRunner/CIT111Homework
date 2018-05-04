@@ -42,16 +42,16 @@ public class BattleShip {
             }
         }
         //play the game
-        while(isGameNotOver()){
-            //everyone take a turn
-            for (Player player : players) {
-            if (!player.getIsGameOver(this)){
-                
-            }
-            
-        }
-        }
-        System.out.println("That was fun, lets play again!");
-
+//        while(false)
+//            //everyone take a turn
+//            for (Player player : players) {
+//            if (!player.getIsGameOver(this)){
+//                
+//            }
+//            
+//        }
+//        }
+//        System.out.println("That was fun, lets play again!");
+//
     }
 }
