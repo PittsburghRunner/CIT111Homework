@@ -27,6 +27,8 @@ public class Player {
     private int numberOfHits = 0;
     private int numberOfMisses = 0;
     private Board playerBoard;
+    private Boolean isComputer = true;
+    private Boolean isGameOver = false;
 
     //constructor
     public Player(String name) {
@@ -62,4 +64,19 @@ public class Player {
         this.numberOfMisses = numberOfMisses;
     }
 
+    public Boolean getIsComputer() {
+        return isComputer;
+    }
+
+    public void setIsComputer(Boolean isComputer) {
+        this.isComputer = isComputer;
+    }
+
+    public Boolean getIsGameOver(BattleShip game) {
+        return isGameOver;
+    }
+
+    public void setIsGameOver(Boolean isGameOver) {
+        this.isGameOver = isGameOver;
+    }
 }

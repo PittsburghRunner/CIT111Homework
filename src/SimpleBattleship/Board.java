@@ -130,7 +130,7 @@ public class Board {
             for (int xx = x; xx < x + size; xx++) {
                 if (getLocation(xx, y).getStatus().equals(Ship.SHIP)) {
                     if (SimpleBattleShip.DEBUG) {
-                        System.out.println("recaulate... ship already here");
+                        System.out.println("recaulate... piece already here");
                     }
                     return false;
                 }

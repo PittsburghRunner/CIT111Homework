@@ -26,11 +26,7 @@ public class Ship {
     public static final String SHIP = "S";
     public static final String HIT = "X";
 
-
-   
-
     private int shipId;
-
     private int shipSize;
     private int shipStartX;
     private int shipStartY;

@@ -40,9 +40,9 @@ public class SimpleBattleShip {
         }
 
         for (Player player : players) {
-            int indexOf = players.indexOf(player);
+//            int indexOf = players.indexOf(player);
             if (SimpleBattleShip.DEBUG)System.out.println("indexOf" + indexOf);
-            player.getPlayerBoard().printBoard(false);
+            player.getPlayerBoard().printBoard(true);
 
             for (Ship fleet : player.getPlayerBoard().getFleet()) {
                 if (SimpleBattleShip.DEBUG)System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
