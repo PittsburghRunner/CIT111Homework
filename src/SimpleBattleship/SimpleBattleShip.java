@@ -26,9 +26,11 @@ import java.util.Scanner;
  */
 public class SimpleBattleShip {
 
+    public static final Boolean DEBUG = false; 
+    
     public static final int NUMBER_OF_PLAYERS = 2;
 
-    private static final ArrayList<Player> players = new ArrayList();
+    public static final ArrayList<Player> players = new ArrayList();
 
     public static void main(String[] args) {
 
@@ -38,12 +40,12 @@ public class SimpleBattleShip {
         }
 
         for (Player player : players) {
-            int indexOf = players.indexOf(players);
-
-            player.getPlayerBoard().printBoard(true);
+            int indexOf = players.indexOf(player);
+            if (SimpleBattleShip.DEBUG)System.out.println("indexOf" + indexOf);
+            player.getPlayerBoard().printBoard(false);
 
             for (Ship fleet : player.getPlayerBoard().fleet) {
-                System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
+                if (SimpleBattleShip.DEBUG)System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
             }
         }
 

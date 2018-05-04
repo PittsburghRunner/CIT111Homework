@@ -24,28 +24,32 @@ import java.util.Random;
  * @author christopher.eckles
  */
 public class RandomNumber {
- 
+
     public static void main(String[] args) {
         System.out.println(generateRandomLocation(2));
-                System.out.println(generateRandomLocation(2));
-
-                        System.out.println(generateRandomLocation(2));
-
-                                System.out.println(generateRandomLocation(2));
         System.out.println(generateRandomLocation(2));
 
-                System.out.println(generateRandomLocation(2));
+        System.out.println(generateRandomLocation(2));
 
-                                
+        System.out.println(generateRandomLocation(2));
+        System.out.println(generateRandomLocation(2));
+
+        System.out.println(generateRandomLocation(2));
+
     }
+
     // generate a random number
     public static int generateRandomLocation(int maxInt) {
         // create a new random number object
-        Random r = new Random();
-        //create a int amd stpre tje next int insid it
-        int next = r.nextInt(maxInt);
-        //System.out.println("Random Number: " + next);
-        //return the value
-        return next;
+        if (maxInt > 0) {
+            Random r = new Random();
+            //create a int amd stpre tje next int insid it
+            int next = r.nextInt(maxInt);
+            //System.out.println("Random Number: " + next);
+            //return the value
+            return next;
+        }
+        if (SimpleBattleShip.DEBUG)System.out.println("Nothing Random about a range of Zero");
+    return 0;
     }
 }

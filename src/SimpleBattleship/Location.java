@@ -44,7 +44,7 @@ public class Location {
             this.status = status;
             return true;
         } else {
-            System.out.println("Invalid Status Change: " + this.status + " to " + status);
+            if (SimpleBattleShip.DEBUG)System.out.println("Invalid Status Change: " + this.status + " to " + status);
             return false;
         }
     }

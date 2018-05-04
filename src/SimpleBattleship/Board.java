@@ -24,10 +24,11 @@ package SimpleBattleship;
 public class Board {
 
     public static final int SHIP_SIZES[] = {5, 4, 3, 3, 2};
-    public static final String DIRECTION[] = {"North to South", "East to West"};
-
+    public static final int EAST_TO_WEST = 0;
+    public static final int NORTH_TO_SOUTH = 1;
+    public static final String DIRECTION[] = {"East to West", "North to South"};
     public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"};
-    public static final int BOARD_Y = 10;
+    public static final int BOARD_Y = 20;
 
     public static final int NO_SHIP = -1;
     public static final String LOCATION_EMPTY = "^";
@@ -55,26 +56,26 @@ public class Board {
             Ship ship;
             while (!set) {
                 direction = RandomNumber.generateRandomLocation(2);
-                System.out.println("direction: " + direction);
+                if (SimpleBattleShip.DEBUG)System.out.println("direction: " + direction);
                 int y_range;
                 int x_range;
-                if (direction == 1) {
-                    x_range = BOARD_Y - 1;
-                    y_range = BOARD_X.length - size - 2;
+                if (direction == EAST_TO_WEST) {
+                    y_range = BOARD_Y - 1;
+                    x_range = BOARD_X.length - size - 1;
                 } else {
-                    x_range = BOARD_Y - size - 2;
-                    y_range = BOARD_X.length - 1;
+                    y_range = BOARD_Y - size - 1;
+                    x_range = BOARD_X.length - 1;
                 }
                 int y = RandomNumber.generateRandomLocation(y_range);
                 int x = RandomNumber.generateRandomLocation(x_range);
-                System.out.println("direction: " + direction);
+                if (SimpleBattleShip.DEBUG)System.out.println("direction: " + direction);
 
                 if (setShipLocation(id, x, y, direction, size)) {
                     set = true;
-                    System.out.println("direction: " + direction);
+                    if (SimpleBattleShip.DEBUG)System.out.println("direction: " + direction);
 
                     ship = new Ship(id, x, y, direction, size);
-                    System.out.println("Location of " + ship.getShipId() + " ship: " + ship.getShipStartLocation());
+                    if (SimpleBattleShip.DEBUG)System.out.println("Location of " + ship.getShipId() + " ship: " + ship.getShipStartLocation());
                     fleet[id] = ship;
 
                 }
@@ -88,7 +89,7 @@ public class Board {
         board = new Location[y][x];
         for (int yy = 0; yy < y; yy++) {
             for (int xx = 0; xx < x; xx++) {
-                System.out.println("X:" + Board.BOARD_X[xx] + " - Y:" + yy);
+                if (SimpleBattleShip.DEBUG)System.out.println("Y:" + (yy+1) + "X:" + Board.BOARD_X[xx]);
                 board[yy][xx] = new Location();
             }
         }
@@ -108,35 +109,35 @@ public class Board {
     }
 
     public Location getLocation(int x, int y) {
-        System.out.println("getLocation: y" + y + "x" + x);
-        if (y <= BOARD_Y && x <= BOARD_X.length) {
+        if (SimpleBattleShip.DEBUG)System.out.println("getLocation: X" + BOARD_X[x] + "Y" + y);
+        if (y < BOARD_Y && x < BOARD_X.length) {
             return board[y][x];
         }
-        System.out.println("Out of bounds.");
+        if (SimpleBattleShip.DEBUG)System.out.println("Out of bounds.");
         return new Location();
     }
 
     private Boolean setShipLocation(int id, int x, int y, int direction, int size) {
-        if (direction == 1) {
-            for (int i = y; i < y + size; i++) {
-                if (getLocation(i, x).getStatus().equals(LOCATION_SHIP)) {
-                    System.out.println("recaulate... ship already here");
+        if (direction == EAST_TO_WEST) {
+            for (int xx = x; xx < x + size; xx++) {
+                if (getLocation(xx, y).getStatus().equals(LOCATION_SHIP)) {
+                    if (SimpleBattleShip.DEBUG)System.out.println("recaulate... ship already here");
+                    return false;
+                }
+            }
+            for (int xx = x; xx < x + size; xx++) {
+                getLocation(xx, y).setOccupiedBy(id);
+            }
+            return true;
+        } else {
+            for (int yy = y; yy < y + size; yy++) {
+                if (getLocation(x, yy).getStatus().equals(LOCATION_SHIP)) {
+                    if (SimpleBattleShip.DEBUG)System.out.println("recaulate... ship already here");
                     return false;
                 }
             }
             for (int yy = y; yy < y + size; yy++) {
-                getLocation(yy, x).setOccupiedBy(id);
-            }
-            return true;
-        } else {
-            for (int xx = x; xx < x + size; xx++) {
-                if (getLocation(y, xx).getStatus().equals(LOCATION_SHIP)) {
-                    System.out.println("recaulate... ship already here");
-                    return false;
-                }
-            }
-            for (int xx = x; xx < x + size; xx++) {
-                getLocation(y, xx).setOccupiedBy(id);
+                getLocation(x, yy).setOccupiedBy(id);
             }
             return true;
         }
