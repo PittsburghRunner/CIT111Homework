@@ -25,7 +25,10 @@ public class Board {
 
     public static final int SHIP_SIZES[] = {5, 4, 3, 3, 2};
     public static final int BOARD_LONGITUTDE = 20;
+    public static final int NO_SHIP = -1;
+
     public static final String BOARD_LATITUDE[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"};
+ 
     public static final String LOCATION_EMPTY = "^";
     public static final String LOCATION_MISSED = "M";
     public static final String LOCATION_SHIP = "S";

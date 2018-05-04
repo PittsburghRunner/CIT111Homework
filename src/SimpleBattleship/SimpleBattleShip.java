@@ -52,13 +52,15 @@ public class SimpleBattleShip {
     private static String getUserInput(String prompt, int min, int max) {
         String input = "";
         Scanner userInputScanner = new Scanner(System.in);
-        System.out.print("Please enter " + prompt + " (min:" + min + " max:" + max + "): ");
 
         while (true) {
+            System.out.print("Please enter " + prompt + " (min:" + min + " max:" + max + "): ");
             input = userInputScanner.nextLine();
             if (input.length() >= min && input.length() <= max) {
                 return input;
-            };
+            } else {
+                System.out.println("Input did not meet requirements. Please try again.");
+            }
         }
 
     }

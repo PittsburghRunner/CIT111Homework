@@ -22,32 +22,28 @@ package SimpleBattleship;
  * @author ceckles
  */
 public class Player {
-    
+
     private String playerName = "Not Sure";
     private int numberOfHits = 0;
     private int numberOfMisses = 0;
     private Board playerBoard;
-    
-    public Player(String name){
+
+    //constructor
+    public Player(String name) {
         this.setPlayerName(name);
         this.playerBoard = new Board(this);
     }
-    
+
+    private void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     public Board getPlayerBoard() {
         return playerBoard;
     }
 
-    public void setPlayerBoard(Board playerBoard) {
-        this.playerBoard = playerBoard;
-    }
-       
-    
     public String getPlayerName() {
         return playerName;
-    }
-
-    public final void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     public int getNumberOfHits() {
@@ -66,5 +62,4 @@ public class Player {
         this.numberOfMisses = numberOfMisses;
     }
 
-    
 }
