@@ -22,6 +22,12 @@ package SimpleBattleship;
  * @author christopher.eckles
  */
 public class Ship {
+    public static final String MISSED = "M";
+    public static final String SHIP = "S";
+    public static final String HIT = "X";
+
+
+   
 
     private int shipId;
 
@@ -58,10 +64,11 @@ public class Ship {
         this.shipSize = size;
         this.shipStatus = new String[size];
         for (int i = 0; i < shipStatus.length; i++) {
-            shipStatus[i] = Board.LOCATION_SHIP;
+            shipStatus[i] = SHIP;
         }
 
     }
+    
 
     public String getShipStartLocation() {
         return Board.BOARD_X[this.shipStartX] + (this.shipStartY + 1) + " heading " + Board.DIRECTION[shipDirection];
@@ -77,8 +84,8 @@ public class Ship {
 
         for (String status : shipStatus) {
 
-            if (shipStatus[section].equals(Board.LOCATION_SHIP)) {
-                shipStatus[section] = Board.LOCATION_HIT;
+            if (shipStatus[section].equals(SHIP)) {
+                shipStatus[section] = HIT;
                 System.out.println("I'm hit!");
                 this.isSank();
                 return true;
@@ -90,7 +97,7 @@ public class Ship {
 
     public Boolean isSank() {
         for (String status : shipStatus) {
-            if (status.equals(Board.LOCATION_SHIP)) {
+            if (status.equals(SHIP)) {
                 return false;
             }
         }

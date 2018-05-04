@@ -44,7 +44,7 @@ public class SimpleBattleShip {
             if (SimpleBattleShip.DEBUG)System.out.println("indexOf" + indexOf);
             player.getPlayerBoard().printBoard(false);
 
-            for (Ship fleet : player.getPlayerBoard().fleet) {
+            for (Ship fleet : player.getPlayerBoard().getFleet()) {
                 if (SimpleBattleShip.DEBUG)System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
             }
         }

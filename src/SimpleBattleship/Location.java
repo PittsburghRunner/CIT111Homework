@@ -22,14 +22,17 @@ package SimpleBattleship;
  * @author ceckles
  */
 public class Location {
+    
+    public static final String EMPTY = "^";
+    public static final int NO_PIECE = -1;
 
     private String status;
     private int occupiedBy;
 
     //constructor
     public Location() {
-        this.status = Board.LOCATION_EMPTY;
-        this.occupiedBy = Board.NO_SHIP;
+        this.status = EMPTY;
+        this.occupiedBy = NO_PIECE;
     }
 
     public String getStatus() {
@@ -37,10 +40,10 @@ public class Location {
     }
 
     public Boolean setStatus(String status) {
-        if (this.status.equals(Board.LOCATION_EMPTY) && (status.equals(Board.LOCATION_MISSED) || status.equals(Board.LOCATION_SHIP))) {
+        if (this.status.equals(EMPTY) && (status.equals(Ship.MISSED) || status.equals(Ship.SHIP))) {
             this.status = status;
             return true;
-        } else if (this.status.equals(Board.LOCATION_SHIP) && status.equals(Board.LOCATION_HIT)) {
+        } else if (this.status.equals(Ship.SHIP) && status.equals(Ship.HIT)) {
             this.status = status;
             return true;
         } else {
@@ -55,7 +58,7 @@ public class Location {
 
     public void setOccupiedBy(int occupiedBy) {
         if (occupiedBy < Board.SHIP_SIZES.length){
-        setStatus(Board.LOCATION_SHIP);
+        setStatus(Ship.SHIP);
         this.occupiedBy = occupiedBy;    
         }
 
