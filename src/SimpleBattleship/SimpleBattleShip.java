@@ -33,7 +33,7 @@ public class SimpleBattleShip {
     public static void main(String[] args) {
 
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
-            String n = getUserInput("Player " + i + "'s Name", 3, Board.BOARD_LATITUDE.length);
+            String n = getUserInput("Player " + i + "'s Name", 3, Board.BOARD_X.length);
             players.add(new Player(n));
         }
 

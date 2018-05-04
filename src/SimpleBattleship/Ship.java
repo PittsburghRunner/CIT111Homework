@@ -23,16 +23,38 @@ package SimpleBattleship;
  */
 public class Ship {
 
-    private int shipSize = 0;
-    private int shipStartLocation = 0;
+    private int shipId;
+
+    private int shipSize;
+    private int shipStartX;
+    private int shipStartY;
+    private int shipDirection;
+
+    public int getShipDirection() {
+        return shipDirection;
+    }
+
     private String shipStatus[];
-    //TODO: Direction
+
+    public Ship(int id, int x, int y, int direction, int size) {
+        setShipId(id);
+        setShipStartLocation(x, y, direction);
+        setShipSize(size);
+    }
+
+    public int getShipId() {
+        return shipId;
+    }
+
+    private void setShipId(int shipId) {
+        this.shipId = shipId;
+    }
 
     public int getShipSize() {
         return this.shipSize;
     }
 
-    public void setShipSize(int size) {
+    private void setShipSize(int size) {
         this.shipSize = size;
         this.shipStatus = new String[size];
         for (int i = 0; i < shipStatus.length; i++) {
@@ -41,41 +63,40 @@ public class Ship {
 
     }
 
-    public int getShipStartLocation() {
-        return this.shipStartLocation;
+    public String getShipStartLocation() {
+        return Board.BOARD_X[this.shipStartX] + (this.shipStartY + 1) + " heading " + Board.DIRECTION[shipDirection];
     }
 
-    public void setShipStartLocation(int size) {
-        this.shipStartLocation = size;
+    private void setShipStartLocation(int x, int y, int direction) {
+        this.shipStartX = x;
+        this.shipStartY = y;
+        this.shipDirection = direction;
     }
 
-    public Boolean isHit(int location) {
+    public Boolean hit(int section) {
 
-        for (int i = 0; i < shipStatus.length; i++) {
+        for (String status : shipStatus) {
 
-            if (i + getShipStartLocation() == location) {
-                shipStatus[i] = Board.LOCATION_HIT;
+            if (shipStatus[section].equals(Board.LOCATION_SHIP)) {
+                shipStatus[section] = Board.LOCATION_HIT;
+                System.out.println("I'm hit!");
+                this.isSank();
                 return true;
             }
         }
+        System.out.println("Hit");
         return false;
     }
 
     public Boolean isSank() {
-        for (int i = 0; i < shipStatus.length; i++) {
-            if (!shipStatus[i].equals(Board.LOCATION_SHIP)) {
+        for (String status : shipStatus) {
+            if (status.equals(Board.LOCATION_SHIP)) {
                 return false;
             }
         }
+        System.out.println("You Sank My Battle Ship!");
         return true;
 
     }
 
 }
-
-/**
- * Ship int shipSize int shipStartLocation Boolean isSank Array sectionsHit
- *
- * buildShip isSank checkLocation
- *
- */

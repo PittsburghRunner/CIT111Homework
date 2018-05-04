@@ -54,8 +54,11 @@ public class Location {
     }
 
     public void setOccupiedBy(int occupiedBy) {
-        this.status = Board.LOCATION_SHIP;
-        this.occupiedBy = occupiedBy;
+        if (occupiedBy < Board.SHIP_SIZES.length){
+        setStatus(Board.LOCATION_SHIP);
+        this.occupiedBy = occupiedBy;    
+        }
+
     }
 
 }
