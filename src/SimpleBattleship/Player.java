@@ -72,11 +72,7 @@ public class Player {
         this.isComputer = isComputer;
     }
 
-    public Boolean getIsGameOver(BattleShip game) {
+    public Boolean isGameOver() {
         return isGameOver;
-    }
-
-    public void setIsGameOver(Boolean isGameOver) {
-        this.isGameOver = isGameOver;
     }
 }

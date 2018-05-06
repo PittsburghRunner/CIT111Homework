@@ -18,6 +18,7 @@
 package SimpleBattleship;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -26,30 +27,64 @@ import java.util.Scanner;
  */
 public class SimpleBattleShip {
 
-    public static final Boolean DEBUG = false; 
-    
+    public static final Boolean DEBUG = false;
+
     public static final int NUMBER_OF_PLAYERS = 2;
 
-    public static final ArrayList<Player> players = new ArrayList();
+    public static ArrayList<Player> players = new ArrayList();
 
     public static void main(String[] args) {
 
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
-           // String n = getUserInput("Player " + i + "'s Name", 3, Board.BOARD_X.length);
-           String n= "testname";
+            String n = getUserInput("Player " + i + "'s Name", 3, Board.BOARD_X.length);
+            //String n = "testname";
             players.add(new Player(n));
         }
 
-        for (Player player : players) {
-            int indexOf = players.indexOf(player);
-            if (SimpleBattleShip.DEBUG)System.out.println("indexOf" + indexOf);
-            player.getPlayerBoard().printBoard(true);
-
-            for (Ship fleet : player.getPlayerBoard().getFleet()) {
-                if (SimpleBattleShip.DEBUG)System.out.println(fleet.getShipStartLocation() + " - size: " + fleet.getShipSize());
+        boolean endGame = false;
+        while (!endGame) {
+            int playerCount = 0;
+            for (Player player : players) {
+                int opponentCount = 0;
+                for (Player opponent : players) {
+                    if (playerCount != opponentCount) {
+                        makeAGuess(player, opponent);
+                    }
+                    opponentCount++;
+                    endGame = opponent.isGameOver();
+                }
+                playerCount++;
             }
         }
+    }
 
+    public static Boolean makeAGuess(Player player, Player opponent) {
+        Boolean validGuess = false;
+        String guess;
+        String string_x;
+        String string_y;
+        Scanner guessInput = new Scanner(System.in);
+        while (!validGuess) {
+            opponent.getPlayerBoard().printBoard(false);
+            System.out.print(player.getPlayerName() + "'s turn! Make Your Guess:  ");
+            guess = guessInput.next();
+            if (guess.matches("[a-zA-Z][0-9]+")) {
+                string_x = guess.substring(0, 1).toUpperCase();
+                string_y = guess.substring(1);
+                int x = Arrays.asList(Board.BOARD_X).indexOf(string_x);
+                int y = new Integer(string_y) - 1;
+                try {
+                    validGuess = opponent.getPlayerBoard().getLocation(x, y).guess();
+
+                } catch (Exception e) {
+                    System.out.println("Invalid Guess, Please Try again.");
+                }
+            } else {
+                System.out.println("Invalid Guess, Please Try again.");
+            }
+            sleep(3);
+        }
+        return true;
     }
 
     private static String getUserInput(String prompt, int min, int max) {
@@ -64,6 +99,15 @@ public class SimpleBattleShip {
             } else {
                 System.out.println("Input did not meet requirements. Please try again.");
             }
+        }
+
+    }
+    public static void sleep(int timeInSeconds) {
+        int timeInms = (timeInSeconds * 1000);
+        try {
+            Thread.sleep(timeInms);
+        } catch (InterruptedException e) {
+            System.out.println("Interuppted Exception: " + e);
         }
 
     }

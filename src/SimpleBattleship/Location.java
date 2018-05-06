@@ -22,17 +22,18 @@ package SimpleBattleship;
  * @author ceckles
  */
 public class Location {
-    
+
     public static final String EMPTY = "^";
     public static final int NO_PIECE = -1;
 
     private String status;
-    private int occupiedBy;
+
+    private Ship occupiedBy;
 
     //constructor
     public Location() {
         this.status = EMPTY;
-        this.occupiedBy = NO_PIECE;
+        //    this.occupiedBy = NO_PIECE;
     }
 
     public String getStatus() {
@@ -40,28 +41,49 @@ public class Location {
     }
 
     public Boolean setStatus(String status) {
-        if (this.status.equals(EMPTY) && (status.equals(Ship.MISSED) || status.equals(Ship.SHIP))) {
+        if (this.status.equals(EMPTY) && (status.equals(Ship.MISSED))) {
             this.status = status;
             return true;
-        } else if (this.status.equals(Ship.SHIP) && status.equals(Ship.HIT)) {
+        } else if (!this.status.equals(EMPTY) && !this.status.equals(Ship.MISSED) && status.equals(Ship.HIT)) {
             this.status = status;
             return true;
         } else {
-            if (SimpleBattleShip.DEBUG)System.out.println("Invalid Status Change: " + this.status + " to " + status);
+            if (SimpleBattleShip.DEBUG) {
+                System.out.println("Invalid Status Change: " + this.status + " to " + status);
+            }
             return false;
         }
     }
+    
+        public Boolean guess() {
+        switch (getStatus()) {
+            case Ship.MISSED:
+            case Ship.HIT:
+                System.out.println("You alraedy guessed this location, try again.");
+                break;
+            case Location.EMPTY:
+                setStatus(Ship.MISSED);
+                System.out.println("Sorry, You missed.");
+                return true;
+            default:
+                setStatus(Ship.HIT);
+                System.out.println("I'm hit!");
+                getOccupiedBy().decrementShipSectionsLeft();
+                if (getOccupiedBy().isSank()) {
+                    System.out.println("You Sank My " + getOccupiedBy().getShipType().getModel() + "!");
+                };
+                return true;
+        }
+        return false;
+    }
 
-    public int getOccupiedBy() {
+    public Ship getOccupiedBy() {
         return occupiedBy;
     }
 
-    public void setOccupiedBy(int occupiedBy) {
-        if (occupiedBy < Board.SHIP_SIZES.length){
-        setStatus(Ship.SHIP);
-        this.occupiedBy = occupiedBy;    
-        }
-
+    public void setOccupiedBy(Ship ship) {
+        this.status = ship.getShipType().getIdentifier();
+        this.occupiedBy = ship;
     }
 
 }
