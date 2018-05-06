@@ -27,8 +27,8 @@ public class Board {
     public static final int EAST_TO_WEST = 0;
     public static final int NORTH_TO_SOUTH = 1;
     public static final String DIRECTION[] = {"East to West", "North to South"};
-    public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"};
-    public static final int BOARD_Y = 20;
+    public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};//, "K", "L", "M", "N", "O", "P", "Q", "R"};
+    public static final int BOARD_Y = 10;
 
     public static final String TWO_SPACES = "~~";
 
@@ -56,11 +56,11 @@ public class Board {
                 int y_range;
                 int x_range;
                 if (direction == EAST_TO_WEST) {
-                    y_range = BOARD_Y - 1;
-                    x_range = BOARD_X.length - size - 1;
+                    y_range = BOARD_Y;
+                    x_range = BOARD_X.length - size;
                 } else {
-                    y_range = BOARD_Y - size - 1;
-                    x_range = BOARD_X.length - 1;
+                    y_range = BOARD_Y - size;
+                    x_range = BOARD_X.length;
                 }
                 int y = RandomNumber.generateRandomLocation(y_range);
                 int x = RandomNumber.generateRandomLocation(x_range);
@@ -184,19 +184,18 @@ public class Board {
             boardStatus = boardStatus + TWO_SPACES + TWO_SPACES + ((yy + 1)) + "\n";
 
         } //end y
-
+        String boardFooter = "";
+        for (String xLabels : BOARD_X) {
+            boardFooter = boardFooter + TWO_SPACES + xLabels;
+        }
         int borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - boardName.length()) / 2)).intValue();
         String border = "";
         for (int i = 0; i < borderLength; i++) {
             border = border + "*";
         }
         System.out.println(border + TWO_SPACES + boardName + TWO_SPACES + border);
+        System.out.println(boardFooter);
         System.out.println(boardStatus);
-
-        String boardFooter = "";
-        for (String xLabels : BOARD_X) {
-            boardFooter = boardFooter + TWO_SPACES + xLabels;
-        }
         System.out.println(boardFooter);
 
     }//end printbaord
