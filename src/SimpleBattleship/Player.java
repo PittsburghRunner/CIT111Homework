@@ -17,11 +17,15 @@
  */
 package SimpleBattleship;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  *
  * @author ceckles
  */
 public class Player {
+
     private static final String COMPUTER_STRING = "computer";
     private String playerName = "Not Sure";
     private int numberOfHits = 0;
@@ -29,12 +33,14 @@ public class Player {
     private Board playerBoard;
     private Boolean isComputer = true;
     private Boolean isGameOver = false;
+    private Collection<FiredMissle> firedMissles;
 
     //constructor
     public Player(String name) {
+        this.firedMissles = new ArrayList<>();
         this.setPlayerName(name);
+        this.isComputer = name.trim().toLowerCase().contains(COMPUTER_STRING);
         this.playerBoard = new Board(this);
-        isComputer =  name.trim().toLowerCase().contains(COMPUTER_STRING);
     }
 
     private void setPlayerName(String playerName) {
@@ -53,16 +59,16 @@ public class Player {
         return numberOfHits;
     }
 
-    public void setNumberOfHits(int numberOfHits) {
-        this.numberOfHits = numberOfHits;
+    public void incrementNumberOfHits() {
+        this.numberOfHits++;
     }
 
     public int getNumberOfMisses() {
         return numberOfMisses;
     }
 
-    public void setNumberOfMisses(int numberOfMisses) {
-        this.numberOfMisses = numberOfMisses;
+    public void incrementNumberOfMisses() {
+        this.numberOfMisses++;
     }
 
     public Boolean getIsComputer() {
@@ -77,7 +83,11 @@ public class Player {
         return playerBoard.isBoardGameOver();
     }
     
-    public void printStats(){
+    public void addFiredMissle(Player opponent,int x, int y, String onTarget, FiredMissle previousMissle){
+        firedMissles.add(new FiredMissle(opponent,x,y, onTarget, previousMissle));
+    }
+
+    public void printStats() {
         System.out.println(playerName + " stats: \nHits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
     }
 }

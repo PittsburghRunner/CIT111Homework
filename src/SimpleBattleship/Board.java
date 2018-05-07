@@ -17,6 +17,9 @@
  */
 package SimpleBattleship;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 /**
  *
  * @author christopher.eckles
@@ -31,6 +34,7 @@ public class Board {
     public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};//, "K", "L", "M", "N", "O", "P", "Q", "R"};
     public static final int BOARD_Y = 10;
 
+    private static final String BOARD_HEADER = "Opponent's Board";
     public static final String TWO_SPACES = "~~";
 
     private int piecesLeft = ShipType.values().length;
@@ -49,41 +53,72 @@ public class Board {
             int size;
             size = shipType.getSize();
             Boolean set = false;
-            int direction = NO_DIRECTION;
+            int direction;
+            int x = 0;
+            int y = 0;
             Ship ship = new Ship(id, shipType);
             while (!set) {
-                direction = RandomNumber.generateRandomLocation(2);
-                if (SimpleBattleShip.DEBUG) {
-                    System.out.println("direction: " + direction);
-                }
-                int y_range;
-                int x_range;
-                if (direction == EAST_TO_WEST) {
-                    y_range = BOARD_Y;
-                    x_range = BOARD_X.length - size;
-                } else {
-                    y_range = BOARD_Y - size;
-                    x_range = BOARD_X.length;
-                }
-                int y = RandomNumber.generateRandomLocation(y_range);
-                int x = RandomNumber.generateRandomLocation(x_range);
-                if (SimpleBattleShip.DEBUG) {
-                    System.out.println("direction: " + direction);
-                }
+                direction = NO_DIRECTION;
+                if (player.getIsComputer()) {
 
-                    if (setShipLocation(id, x, y, direction, ship)){
-                        
-               
-                    set = true;
+                    direction = RandomNumber.generateRandomLocation(2);
                     if (SimpleBattleShip.DEBUG) {
                         System.out.println("direction: " + direction);
                     }
+                    int y_range;
+                    int x_range;
+                    if (direction == EAST_TO_WEST) {
+                        y_range = BOARD_Y;
+                        x_range = BOARD_X.length - size;
+                    } else {
+                        y_range = BOARD_Y - size;
+                        x_range = BOARD_X.length;
+                    }
+                    y = RandomNumber.generateRandomLocation(y_range);
+                    x = RandomNumber.generateRandomLocation(x_range);
                     if (SimpleBattleShip.DEBUG) {
-                        System.out.println("Location of " + ship.getShipType().getModel() + " ship: " + Board.BOARD_X[x] + (y+1) + " heading "+ Board.DIRECTION[direction]);
+                        System.out.println("direction: " + direction);
+                    }
+                } else {
+                    Boolean validInput = false;
+                    Scanner scanner = new Scanner(System.in);
+                    String stringDirection = "";
+                    String stringX = "";
+                    String stringY = "";
+                    String locationInput = "";
+                    while (validInput = false) {
+                        try {
+                            while (direction != 0 && direction != 1) {
+                                System.out.println("Enter a Direction \n(0 for " + Board.DIRECTION[Board.NORTH_TO_SOUTH] + " and 0 for " + Board.DIRECTION[Board.EAST_TO_WEST] + "): ");
+                                stringDirection = scanner.next();
+                                direction = new Integer(stringDirection);
+                            }
+                            while (!locationInput.matches("[a-zA-Z][0-9]+")) {
+                                System.out.print("Enter a Location \nRange: " + Board.BOARD_X[0] + "-" + Board.BOARD_X[-1] + " and 1-" + Board.BOARD_Y + "): ");
+                                locationInput = scanner.next();
+                                if (locationInput.matches("[a-zA-Z][0-9]+")) {
+                                    stringX = locationInput.substring(0, 1).toUpperCase();
+                                    stringY = locationInput.substring(1);
+                                    x = Arrays.asList(Board.BOARD_X).indexOf(stringX);
+                                    y = new Integer(stringY) - 1;
+                                } else {
+                                    System.out.println("Invalid Location, Please Try again.");
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Invalid Location, Try again!");
+                        }
+                    }
+                }
+
+                if (setShipLocation(id, x, y, direction, ship)) {
+
+                    set = true;
+                    if (SimpleBattleShip.DEBUG) {
+                        System.out.println("Location of " + ship.getShipType().getModel() + " ship: " + Board.BOARD_X[x] + (y + 1) + " heading " + Board.DIRECTION[direction]);
                     }
                     fleet[id] = ship;
-
-                    }
+                }
 
             }
             id++;
@@ -117,7 +152,7 @@ public class Board {
 
     public Location getLocation(int x, int y) {
         if (SimpleBattleShip.DEBUG) {
-            System.out.println("getLocation: " + BOARD_X[x] + (y+1));
+            System.out.println("getLocation: " + BOARD_X[x] + (y + 1));
         }
         if (y < BOARD_Y && x < BOARD_X.length) {
             return board[y][x];
@@ -146,7 +181,7 @@ public class Board {
             for (int yy = y; yy < y + ship.getShipType().getSize(); yy++) {
                 if (!getLocation(x, yy).getStatus().equals(Location.EMPTY)) {
                     if (SimpleBattleShip.DEBUG) {
-                        System.out.println("recaulate... ship already here");
+                        System.out.println("recaulate... piece already here");
                     }
                     return false;
                 }
@@ -178,8 +213,10 @@ public class Board {
         String boardStatus = "";
         for (int yy = 0; yy < Board.BOARD_Y; yy++) {
             for (int xx = 0; xx < Board.BOARD_X.length; xx++) {
-                if (!(board[yy][xx].getStatus().equals(Ship.HIT) || board[yy][xx].getStatus().equals(Ship.MISSED) ) && !isSelf) {
+                if (!(board[yy][xx].getStatus().equals(Ship.HIT) || board[yy][xx].getStatus().equals(Ship.MISSED)) && !isSelf) {
                     boardStatus = boardStatus + TWO_SPACES + Location.EMPTY;
+                } else if (board[yy][xx].getStatus().equals(Ship.HIT)  && board[yy][xx].getOccupiedBy().getShipSectionsLeft() == 0) {
+                    boardStatus = boardStatus + TWO_SPACES + board[yy][xx].getOccupiedBy().getShipType().getIdentifier();
                 } else {
                     boardStatus = boardStatus + TWO_SPACES + board[yy][xx].getStatus();
                 }
@@ -191,8 +228,14 @@ public class Board {
         for (String xLabels : BOARD_X) {
             boardFooter = boardFooter + TWO_SPACES + xLabels;
         }
-        int borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - boardName.length()) / 2)).intValue();
+        int borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - BOARD_HEADER.length()) / 2)).intValue();
         String border = "";
+        for (int i = 0; i < borderLength; i++) {
+            border = border + "*";
+        }
+        System.out.println(border + TWO_SPACES + BOARD_HEADER + TWO_SPACES + border);
+        borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - boardName.length()) / 2)).intValue();
+        border = "";
         for (int i = 0; i < borderLength; i++) {
             border = border + "*";
         }
