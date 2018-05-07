@@ -29,7 +29,7 @@ public class SimpleBattleShip {
 
     public static final Boolean DEBUG = false;
 
-    public static final int NUMBER_OF_PLAYERS = 2;
+    public static final int NUMBER_OF_PLAYERS = 6;
     public static final int SLEEP_BETWEEN_MOVES = 0;
 
     public static ArrayList<Player> players = new ArrayList();
@@ -62,6 +62,7 @@ public class SimpleBattleShip {
             }
         }
         for (Player player : players) {
+            System.out.println("Player Stats:");
             player.printStats();
         }
     }

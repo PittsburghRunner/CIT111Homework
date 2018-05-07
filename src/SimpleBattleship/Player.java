@@ -82,18 +82,16 @@ public class Player {
     public Boolean isGameOver() {
         return playerBoard.isBoardGameOver();
     }
-    
-    public void addFiredMissle(Player opponent,int x, int y, String onTarget, FiredMissle previousMissle){
-        firedMissles.add(new FiredMissle(opponent,x,y, onTarget, previousMissle));
+
+    public void addFiredMissle(Player opponent, int x, int y, String onTarget, FiredMissle previousMissle) {
+        firedMissles.add(new FiredMissle(opponent, x, y, onTarget, previousMissle));
     }
 
-    public Collection<FiredMissle> getFiredMissles(Player opponent){
-        firedMissles ;
-    }
+    public Collection<FiredMissle> getFiredMissles(Player opponent) {
         return firedMissles;
     }
-    
+
     public void printStats() {
-        System.out.println(playerName + " stats: \nHits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
+        System.out.println("\n" + playerName + " stats: \nHits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
     }
 }
