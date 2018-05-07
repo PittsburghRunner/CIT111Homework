@@ -87,6 +87,12 @@ public class Player {
         firedMissles.add(new FiredMissle(opponent,x,y, onTarget, previousMissle));
     }
 
+    public Collection<FiredMissle> getFiredMissles(Player opponent){
+        firedMissles ;
+    }
+        return firedMissles;
+    }
+    
     public void printStats() {
         System.out.println(playerName + " stats: \nHits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
     }

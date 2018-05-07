@@ -66,5 +66,9 @@ public class FiredMissle {
     public String toString(){
        return opponent.getPlayerName() + ": " + Board.BOARD_X[x] + (y+1) +" - " + (hasPreviousMissle()? "prev:" + previousMissle.toString():"");
     }
+    
+    public Boolean isOpponent(Player opponent){
+      return this.opponent == opponent;
+    }
 
 }
