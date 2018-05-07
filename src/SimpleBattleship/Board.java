@@ -23,6 +23,7 @@ package SimpleBattleship;
  */
 public class Board {
 
+    public static final int NO_DIRECTION = -1;
     public static final int EAST_TO_WEST = 0;
     public static final int NORTH_TO_SOUTH = 1;
     public static final String DIRECTION[] = {"East to West", "North to South"};
@@ -48,7 +49,7 @@ public class Board {
             int size;
             size = shipType.getSize();
             Boolean set = false;
-            int direction = -1;
+            int direction = NO_DIRECTION;
             Ship ship = new Ship(id, shipType);
             while (!set) {
                 direction = RandomNumber.generateRandomLocation(2);
@@ -161,8 +162,8 @@ public class Board {
         return piecesLeft;
     }
 
-    public void setPiecesLeft(int piecesLeft) {
-        this.piecesLeft = piecesLeft;
+    public void decrementPiecesLeft() {
+        this.piecesLeft--;
     }
 
     public Ship[] getFleet() {
@@ -209,13 +210,3 @@ public class Board {
     }
 
 }
-
-/**
- * Board FINAL BOARD_SIZE FINAL NUMBER_OF_SHIPS FINAL Array Int[] SHIP_SIZES
- * {2,3,3,4,5}	//grant googled this for me
- *
- * Array Ships Int shipsSank Array board Int[]	//0 empty,1 guessed, 2 ship, 3
- * ship hit
- *
- * printBoard
- */

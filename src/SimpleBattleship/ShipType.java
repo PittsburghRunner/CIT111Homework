@@ -22,9 +22,9 @@ package SimpleBattleship;
  * @author ceckles
  */
 public enum ShipType {
-    CARRIER(5, "Carrier", "A"), BATTLESHIP(4, "Battleship", "B"), SUBMARINE(
-            3, "Submarine", "S"), CRUISER(3, "Cruiser", "C"), DESTROYER(2,
-            "Destroyer", "D");
+    CARRIER(5, "Carrier", "C"), BATTLESHIP(4, "Battleship", "B"), SUBMARINE(
+            3, "Submarine", "S"), CRUISER(3, "Cruiser", "c"), DESTROYER(2,
+            "Destroyer", "d");
 
     private final int SIZE;
     private final String MODEL;

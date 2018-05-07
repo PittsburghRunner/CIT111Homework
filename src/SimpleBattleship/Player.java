@@ -22,7 +22,7 @@ package SimpleBattleship;
  * @author ceckles
  */
 public class Player {
-
+    private static final String COMPUTER_STRING = "computer";
     private String playerName = "Not Sure";
     private int numberOfHits = 0;
     private int numberOfMisses = 0;
@@ -34,6 +34,7 @@ public class Player {
     public Player(String name) {
         this.setPlayerName(name);
         this.playerBoard = new Board(this);
+        isComputer =  name.trim().toLowerCase().contains(COMPUTER_STRING);
     }
 
     private void setPlayerName(String playerName) {
@@ -73,6 +74,10 @@ public class Player {
     }
 
     public Boolean isGameOver() {
-        return isGameOver;
+        return playerBoard.isBoardGameOver();
+    }
+    
+    public void printStats(){
+        System.out.println(playerName + " stats: \nHits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
     }
 }

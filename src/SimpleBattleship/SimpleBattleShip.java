@@ -30,31 +30,39 @@ public class SimpleBattleShip {
     public static final Boolean DEBUG = false;
 
     public static final int NUMBER_OF_PLAYERS = 2;
+    public static final int SLEEP_BETWEEN_MOVES = 1;
 
     public static ArrayList<Player> players = new ArrayList();
+
+    public static boolean endGame = false;
 
     public static void main(String[] args) {
 
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
-            String n = getUserInput("Player " + i + "'s Name", 3, Board.BOARD_X.length);
+            String n = getUserInput("Player " + i + "'s Name. \nType 'Computer' to play against it.", 3, Board.BOARD_X.length * 2);
             //String n = "testname";
             players.add(new Player(n));
         }
 
-        boolean endGame = false;
         while (!endGame) {
             int playerCount = 0;
             for (Player player : players) {
                 int opponentCount = 0;
                 for (Player opponent : players) {
-                    if (playerCount != opponentCount) {
+                    if (!opponent.equals(player) && !opponent.isGameOver()) {
                         makeAGuess(player, opponent);
                     }
                     opponentCount++;
-                    endGame = opponent.isGameOver();
+                    if (opponent.isGameOver()) {
+                        endGame = true;
+                        return;
+                    };
                 }
                 playerCount++;
             }
+        }
+        for (Player player : players) {
+            player.printStats();
         }
     }
 
@@ -66,24 +74,64 @@ public class SimpleBattleShip {
         Scanner guessInput = new Scanner(System.in);
         while (!validGuess) {
             opponent.getPlayerBoard().printBoard(false);
-            System.out.print(player.getPlayerName() + "'s turn! Make Your Guess:  ");
-            guess = guessInput.next();
-            if (guess.matches("[a-zA-Z][0-9]+")) {
-                string_x = guess.substring(0, 1).toUpperCase();
-                string_y = guess.substring(1);
-                int x = Arrays.asList(Board.BOARD_X).indexOf(string_x);
-                int y = new Integer(string_y) - 1;
-                try {
-                    validGuess = opponent.getPlayerBoard().getLocation(x, y).guess();
+            int x = 0;
+            int y = 0;
+            Boolean goodGuess = false;
+            if (player.getIsComputer()) {
+                System.out.println(player.getPlayerName() + " is making a guess...");
+                while (!goodGuess) {
+                    x = RandomNumber.generateRandomLocation(Board.BOARD_X.length);
+                    y = RandomNumber.generateRandomLocation(Board.BOARD_X.length);
+                    goodGuess = (!opponent.getPlayerBoard().getLocation(x, y).getStatus().equals(Ship.HIT) && !opponent.getPlayerBoard().getLocation(x, y).getStatus().equals(Ship.MISSED));
+                }
+                sleep(SLEEP_BETWEEN_MOVES);
+                System.out.println(player.getPlayerName() + " guesses: " + Board.BOARD_X[x] + (y + 1));
+            } else {
+                System.out.print(player.getPlayerName() + "'s turn! Make Your Guess:  ");
+                guess = guessInput.next();
 
-                } catch (Exception e) {
+                if (guess.matches("[a-zA-Z][0-9]+")) {
+                    string_x = guess.substring(0, 1).toUpperCase();
+                    string_y = guess.substring(1);
+                    x = Arrays.asList(Board.BOARD_X).indexOf(string_x);
+                    y = new Integer(string_y) - 1;
+                } else {
                     System.out.println("Invalid Guess, Please Try again.");
                 }
-            } else {
+            }
+
+            try {
+                Location guessedLocation = opponent.getPlayerBoard().getLocation(x, y);
+                switch (guessedLocation.getStatus()) {
+                    case Ship.MISSED:
+                    case Ship.HIT:
+                        System.out.println("You already guessed this location, try again.");
+                        break;
+                    case Location.EMPTY:
+                        guessedLocation.setStatus(Ship.MISSED);
+                        System.out.println("Sorry, You missed.");
+                        validGuess = true;
+                        break;
+                    default:
+                        guessedLocation.setStatus(Ship.HIT);
+                        System.out.println(opponent.getPlayerName() + " is hit!");
+                        validGuess = true;
+                        guessedLocation.getOccupiedBy().decrementShipSectionsLeft();
+                        if (guessedLocation.getOccupiedBy().isSank()) {
+                            System.out.println(player.getPlayerName() + " sank" + opponent.getPlayerName() + "'s " + guessedLocation.getOccupiedBy().getShipType().getModel() + "!");
+                            opponent.getPlayerBoard().decrementPiecesLeft();
+                            if (opponent.getPlayerBoard().isBoardGameOver()) {
+                                System.out.println(opponent.getPlayerName() + " has lost. They have no ships left!");
+                            }
+                        }
+                }
+            } catch (Exception e) {
                 System.out.println("Invalid Guess, Please Try again.");
             }
-            sleep(3);
+
+            sleep(SLEEP_BETWEEN_MOVES);
         }
+
         return true;
     }
 
@@ -102,6 +150,7 @@ public class SimpleBattleShip {
         }
 
     }
+
     public static void sleep(int timeInSeconds) {
         int timeInms = (timeInSeconds * 1000);
         try {

@@ -55,27 +55,7 @@ public class Location {
         }
     }
     
-        public Boolean guess() {
-        switch (getStatus()) {
-            case Ship.MISSED:
-            case Ship.HIT:
-                System.out.println("You alraedy guessed this location, try again.");
-                break;
-            case Location.EMPTY:
-                setStatus(Ship.MISSED);
-                System.out.println("Sorry, You missed.");
-                return true;
-            default:
-                setStatus(Ship.HIT);
-                System.out.println("I'm hit!");
-                getOccupiedBy().decrementShipSectionsLeft();
-                if (getOccupiedBy().isSank()) {
-                    System.out.println("You Sank My " + getOccupiedBy().getShipType().getModel() + "!");
-                };
-                return true;
-        }
-        return false;
-    }
+
 
     public Ship getOccupiedBy() {
         return occupiedBy;
