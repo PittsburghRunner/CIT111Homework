@@ -26,15 +26,19 @@ import java.util.Scanner;
  */
 public class Board {
 
+    //direction constants
     public static final int NO_DIRECTION = -1;
     public static final int EAST_TO_WEST = 0;
     public static final int NORTH_TO_SOUTH = 1;
     public static final String DIRECTION[] = {"East to West", "North to South"};
 
+    
+    //board width and height
     public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
                                         //, "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"};
     public static final int BOARD_Y = 10;
 
+    //print contstants
     private static final String OPPONENT_HEADER = "Opponent's Board";
     public static final String ONE_SPACE = "_";
     public static final String GRID_SPACING = " | ";
@@ -42,7 +46,7 @@ public class Board {
     public static final String PIPING = "_|__";
     
 
-
+    //member variables
     private int piecesLeft = ShipType.values().length;
     private String boardName;
     private Ship[] fleet = new Ship[ShipType.values().length];
