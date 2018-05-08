@@ -23,7 +23,7 @@ package SimpleBattleship;
  */
 public class Location {
 
-    public static final String EMPTY = "^";
+    public static final String EMPTY = " ";
     public static final String UNSET_TARGET = "U";
 
     public static final int NO_PIECE = -1;

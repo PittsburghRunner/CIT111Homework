@@ -31,15 +31,16 @@ public class Board {
     public static final int NORTH_TO_SOUTH = 1;
     public static final String DIRECTION[] = {"East to West", "North to South"};
 
-    public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};//, "K", "L", "M", "N", "O", "P", "Q", "R"};
+    public static final String BOARD_X[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+                                        //, "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"};
     public static final int BOARD_Y = 10;
 
     private static final String OPPONENT_HEADER = "Opponent's Board";
-    public static final String ONE_SPACE = " ";
-    public static final String TWO_SPACES = "~~";
-    public static final String THREE_SPACES = "_|_";
+    public static final String ONE_SPACE = "_";
+    public static final String GRID_SPACING = " | ";
     public static final String BORDER = "*";
-
+    public static final String PIPING = "_|__";
+    
 
 
     private int piecesLeft = ShipType.values().length;
@@ -91,7 +92,10 @@ public class Board {
                     String stringY = "";
                     String locationInput = "";
                     while (!set) {
-                        System.out.print("Place your " + shipType.getModel() + "\nEnter a Direction \n(" + Board.NORTH_TO_SOUTH + " for " + Board.DIRECTION[Board.NORTH_TO_SOUTH] + " and " + Board.EAST_TO_WEST + " for " + Board.DIRECTION[Board.EAST_TO_WEST] + "): ");
+                        printWithBorder("Place your " + shipType.getModel());
+                        printWithBorder("Enter a Direction");
+                        System.out.println(Board.NORTH_TO_SOUTH + ". " + Board.DIRECTION[Board.NORTH_TO_SOUTH]);
+                        System.out.println(Board.EAST_TO_WEST + ". " + Board.DIRECTION[Board.EAST_TO_WEST]);
                         try {
                             directionInput = scanner.next();
 
@@ -134,7 +138,7 @@ public class Board {
         for (int yy = 0; yy < y; yy++) {
             for (int xx = 0; xx < x; xx++) {
                 if (SimpleBattleShip.DEBUG) {
-                    System.out.println("Setting: " + Board.BOARD_X[xx] + (yy+1));
+                    System.out.println("Setting: " + Board.BOARD_X[xx] + (yy + 1));
                 }
                 board[yy][xx] = new Location();
             }
@@ -187,7 +191,7 @@ public class Board {
         } else {
             for (int yy = y; yy < y + ship.getShipType().getSize(); yy++) {
                 if (!isInBounds(x, yy)) {
-                    System.out.println("Location is Off the Grid!");
+                    System.out.println("Misfire!" + SimpleBattleShip.PLEASE_TRY_AGAIN);
                     return false;
                 }
                 Location location = getLocation(x, yy);
@@ -224,55 +228,68 @@ public class Board {
         String currentRowStatus = "";
         int maxRowDigits = String.valueOf(BOARD_Y).length();
         String maxRowOffset = "";
-        for (int i =0; i < maxRowDigits; i++){
-                maxRowOffset = maxRowOffset+BORDER;
-            }
+        for (int i = 0; i < maxRowDigits; i++) {
+            maxRowOffset = maxRowOffset + BORDER;
+        }
+        
+        String xHeader = maxRowOffset;
+        String xPiping = maxRowOffset;
+        for (String xLabels : BOARD_X) {
+            xHeader = xHeader + GRID_SPACING + xLabels;
+            xPiping = xPiping + PIPING;
+
+        }
+        xHeader = xHeader + GRID_SPACING;
+        xPiping = xPiping + PIPING;
+
         for (int yy = 0; yy < Board.BOARD_Y; yy++) {
             currentRowStatus = "";
             String rowOffset = "";
-            String rowNumber = String.valueOf(yy+1);
+            String rowNumber = String.valueOf(yy + 1);
             int yyDigits = String.valueOf(rowNumber).length();
-            for (int i =0; i < maxRowDigits - yyDigits; i++){
-                rowOffset = rowOffset+BORDER;
+            for (int i = 0; i < maxRowDigits - yyDigits; i++) {
+                rowOffset = rowOffset + BORDER;
             }
             currentRowStatus = rowOffset + rowNumber;
             for (int xx = 0; xx < Board.BOARD_X.length; xx++) {
                 if (!(board[yy][xx].getStatus().equals(Ship.HIT) || board[yy][xx].getStatus().equals(Ship.MISSED)) && !isSelf) {
-                    currentRowStatus = currentRowStatus + TWO_SPACES + Location.EMPTY;
+                    currentRowStatus = currentRowStatus + GRID_SPACING + Location.EMPTY;
                 } else if (board[yy][xx].getStatus().equals(Ship.HIT) && board[yy][xx].getOccupiedBy().getShipSectionsLeft() == 0) {
-                    currentRowStatus = currentRowStatus + TWO_SPACES + board[yy][xx].getOccupiedBy().getShipType().getIdentifier();
+                    currentRowStatus = currentRowStatus + GRID_SPACING + board[yy][xx].getOccupiedBy().getShipType().getIdentifier();
                 } else {
-                    currentRowStatus = currentRowStatus + TWO_SPACES + board[yy][xx].getStatus();
+                    currentRowStatus = currentRowStatus + GRID_SPACING + board[yy][xx].getStatus();
                 }
             } //end x
-            
-      
-            boardStatus = boardStatus + currentRowStatus  + TWO_SPACES  + "\n";
+
+            boardStatus = boardStatus + currentRowStatus + GRID_SPACING + "\n" + xPiping + "\n";
 
         } //end y
-        String xHeader = maxRowOffset;
-        for (String xLabels : BOARD_X) {
-            xHeader = xHeader + TWO_SPACES + xLabels;
-        }
-        int borderLength;
-        String border = "";
+        
         if (!isSelf) {
-            borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - OPPONENT_HEADER.length()) / 2)).intValue();
-            for (int i = 0; i < borderLength; i++) {
-                border = border + BORDER;
-            }
-            System.out.println(border + TWO_SPACES + OPPONENT_HEADER + TWO_SPACES + border);
+           printWithBorder(OPPONENT_HEADER);
         }
-        borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - boardName.length()) / 2)).intValue();
-        border = "";
-        for (int i = 0; i < borderLength; i++) {
-            border = border + "*";
-        }
-        System.out.println(maxRowOffset + border + ONE_SPACE + boardName + ONE_SPACE + border);
+        printWithBorder(boardName);
         System.out.println(xHeader);
+        System.out.println(xPiping);
         System.out.println(boardStatus);
 
     }//end printbaord
+
+    public static void printWithBorder(String text) {
+        int maxRowDigits = String.valueOf(BOARD_Y).length();
+        int totalWidth = BOARD_X.length * (1 + GRID_SPACING.length()) + GRID_SPACING.length() + maxRowDigits;
+        int borderLength;
+        String border = "";
+        String makeItEven = "";
+        borderLength = ((Double) Math.floor((totalWidth - text.length()) / 2)).intValue();
+        for (int i = 0; i < borderLength; i++) {
+            border = border + BORDER;
+        }
+        if (text.length() % 2 == 0) {
+            makeItEven = BORDER;
+        }
+        System.out.println(border + text + border + makeItEven);
+    }
 
     public Boolean isBoardGameOver() {
         if (piecesLeft == 0) {

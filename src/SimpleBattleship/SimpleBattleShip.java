@@ -27,17 +27,30 @@ import java.util.Scanner;
  */
 public class SimpleBattleShip {
 
-    public static final Boolean DEBUG = true;
+    public static final Boolean DEBUG = false;
 
     public static final int NUMBER_OF_PLAYERS = 2;
     public static final int SLEEP_BETWEEN_MOVES = 2;
+    
+    public static final String GAME_NAME = "BATTLESHIP!";
+    public static final String FIRE_WHEN_READY = "Fire a missile when ready:";
+    public static final String COMPUTER_FIRING = " is firing a missile!";
+    public static final String PLEASE_TRY_AGAIN = "Please Try Again!";
 
+     
     public static ArrayList<Player> players = new ArrayList();
 
     public static boolean endGame = false;
 
     public static void main(String[] args) {
 
+        Board.printWithBorder("");
+        Board.printWithBorder(GAME_NAME);
+        Board.printWithBorder("");
+        Board.printWithBorder("Lets Play!");
+        Board.printWithBorder("");
+
+        
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
             String n = getUserInput("Player " + i + "'s Name. \nType 'Computer' to play against it.", 3, Board.BOARD_X.length * 2);
             //String n = "Computer " + i;
@@ -61,8 +74,11 @@ public class SimpleBattleShip {
                 playerCount++;
             }
         }
+        System.out.println("You Win!");
+        sleep(2);
+        
+        Board.printWithBorder("Player Stats");
         for (Player player : players) {
-            System.out.println("Player Stats:");
             player.printStats();
         }
     }
@@ -81,17 +97,17 @@ public class SimpleBattleShip {
 
             Boolean goodGuess = false;
             if (player.isComputer()) {
-                System.out.println(player.getPlayerName() + " is making a guess...");
+                System.out.println(player.getPlayerName() + COMPUTER_FIRING);
                 while (!goodGuess) {
                     x = RandomNumber.generateRandomLocation(Board.BOARD_X.length);
                     y = RandomNumber.generateRandomLocation(Board.BOARD_X.length);
                     goodGuess = (!opponent.getPlayerBoard().getLocation(x, y).getStatus().equals(Ship.HIT) && !opponent.getPlayerBoard().getLocation(x, y).getStatus().equals(Ship.MISSED));
                 }
                 sleep(SLEEP_BETWEEN_MOVES);
-                System.out.println(player.getPlayerName() + " guesses: " + Board.BOARD_X[x] + (y + 1));
+                System.out.println(player.getPlayerName() + " fires at: " + Board.BOARD_X[x] + (y + 1));
             } else {
                 Scanner guessInput = new Scanner(System.in);
-                System.out.print(player.getPlayerName() + "'s turn! Make Your Guess:  ");
+                System.out.print(player.getPlayerName() + "'s turn! " + FIRE_WHEN_READY);
                 guess = guessInput.next();
 
                 if (guess.matches("[a-zA-Z][0-9]+")) {
@@ -100,7 +116,7 @@ public class SimpleBattleShip {
                     x = Arrays.asList(Board.BOARD_X).indexOf(string_x);
                     y = new Integer(string_y) - 1;
                 } else {
-                    System.out.println("Invalid Guess, Please Try again.");
+                    System.out.println( "Please Try again.");
                 }
             }
 
@@ -109,7 +125,7 @@ public class SimpleBattleShip {
                 switch (guessedLocation.getStatus()) {
                     case Ship.MISSED:
                     case Ship.HIT:
-                        System.out.println("You already guessed this location, try again.");
+                        System.out.println("You're wasting your missiles, try again.");
                         break;
                     case Location.EMPTY:
                         guessedLocation.setStatus(Ship.MISSED);
@@ -134,7 +150,7 @@ public class SimpleBattleShip {
                         }
                 }
             } catch (Exception e) {
-                System.out.println("Invalid Guess, Please Try again.");
+                System.out.println("Invalid Launch! " + PLEASE_TRY_AGAIN);
             }
 
             sleep(SLEEP_BETWEEN_MOVES);
@@ -153,7 +169,7 @@ public class SimpleBattleShip {
             if (input.length() >= min && input.length() <= max) {
                 return input;
             } else {
-                System.out.println("Input did not meet requirements. Please try again.");
+                System.out.println("Input did not meet requirements. " + PLEASE_TRY_AGAIN);
             }
         }
 

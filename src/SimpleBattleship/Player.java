@@ -95,6 +95,7 @@ public class Player {
     }
 
     public void printStats() {
-        System.out.println("\n" + playerName + " stats: \nHits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
+       Board.printWithBorder(playerName);
+        System.out.println("Hits: " + numberOfHits + " \nMisses: " + numberOfMisses + "\nShips Left: " + playerBoard.getPiecesLeft());
     }
 }
