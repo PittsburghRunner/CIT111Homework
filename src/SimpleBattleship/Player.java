@@ -18,7 +18,8 @@
 package SimpleBattleship;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -31,13 +32,13 @@ public class Player {
     private int numberOfHits = 0;
     private int numberOfMisses = 0;
     private Board playerBoard;
-    private Boolean isComputer = true;
+    private Boolean isComputer = false;
     private Boolean isGameOver = false;
-    private Collection<FiredMissle> firedMissles;
+    private List<Move> moves;
 
     //constructor
     public Player(String name) {
-        this.firedMissles = new ArrayList<>();
+        this.moves = new ArrayList<>();
         this.setPlayerName(name);
         this.isComputer = name.trim().toLowerCase().contains(COMPUTER_STRING);
         this.playerBoard = new Board(this);
@@ -71,24 +72,26 @@ public class Player {
         this.numberOfMisses++;
     }
 
-    public Boolean getIsComputer() {
+    public Boolean isComputer() {
         return isComputer;
-    }
-
-    public void setIsComputer(Boolean isComputer) {
-        this.isComputer = isComputer;
     }
 
     public Boolean isGameOver() {
         return playerBoard.isBoardGameOver();
     }
 
-    public void addFiredMissle(Player opponent, int x, int y, String onTarget, FiredMissle previousMissle) {
-        firedMissles.add(new FiredMissle(opponent, x, y, onTarget, previousMissle));
+    public void addMove(Player opponent, int x, int y, String onTarget, Move previousMissle) {
+        moves.add(new Move(opponent, x, y, onTarget, previousMissle));
     }
 
-    public Collection<FiredMissle> getFiredMissles(Player opponent) {
-        return firedMissles;
+    public List<Move> getListOfMoves(Player opponent) {
+        List<Move> misslesFiredAtOpponent = moves.stream().filter(firedMissle -> firedMissle.isOpponent(opponent)).collect(Collectors.toList());
+
+        return misslesFiredAtOpponent;
+    }
+
+    public Move getLastMove(Player opponent) {
+        return getListOfMoves(opponent).get(-1);
     }
 
     public void printStats() {

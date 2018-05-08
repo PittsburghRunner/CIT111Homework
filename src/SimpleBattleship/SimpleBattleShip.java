@@ -27,10 +27,10 @@ import java.util.Scanner;
  */
 public class SimpleBattleShip {
 
-    public static final Boolean DEBUG = false;
+    public static final Boolean DEBUG = true;
 
-    public static final int NUMBER_OF_PLAYERS = 6;
-    public static final int SLEEP_BETWEEN_MOVES = 0;
+    public static final int NUMBER_OF_PLAYERS = 2;
+    public static final int SLEEP_BETWEEN_MOVES = 2;
 
     public static ArrayList<Player> players = new ArrayList();
 
@@ -39,8 +39,8 @@ public class SimpleBattleShip {
     public static void main(String[] args) {
 
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
-            //String n = getUserInput("Player " + i + "'s Name. \nType 'Computer' to play against it.", 3, Board.BOARD_X.length * 2);
-            String n = "Computer " + i;
+            String n = getUserInput("Player " + i + "'s Name. \nType 'Computer' to play against it.", 3, Board.BOARD_X.length * 2);
+            //String n = "Computer " + i;
             players.add(new Player(n));
         }
 
@@ -74,13 +74,13 @@ public class SimpleBattleShip {
         String string_y;
         int x = 0;
         int y = 0;
-        FiredMissle previousMissle = null;
+        Move previousMissle = null;
 
         while (!validGuess) {
             opponent.getPlayerBoard().printBoard(false);
 
             Boolean goodGuess = false;
-            if (player.getIsComputer()) {
+            if (player.isComputer()) {
                 System.out.println(player.getPlayerName() + " is making a guess...");
                 while (!goodGuess) {
                     x = RandomNumber.generateRandomLocation(Board.BOARD_X.length);
@@ -114,14 +114,14 @@ public class SimpleBattleShip {
                     case Location.EMPTY:
                         guessedLocation.setStatus(Ship.MISSED);
                         System.out.println("Sorry, You missed.");
-                        player.addFiredMissle(opponent,x,y,Ship.MISSED,previousMissle);
+                        player.addMove(opponent,x,y,Ship.MISSED,previousMissle);
                         validGuess = true;
                         player.incrementNumberOfMisses();
                         break;
                     default:
                         guessedLocation.setStatus(Ship.HIT);
                         System.out.println(opponent.getPlayerName() + " is hit!");
-                        player.addFiredMissle(opponent,x,y,Ship.HIT,previousMissle);
+                        player.addMove(opponent,x,y,Ship.HIT,previousMissle);
                         validGuess = true;
                         player.incrementNumberOfHits();
                         guessedLocation.getOccupiedBy().decrementShipSectionsLeft();

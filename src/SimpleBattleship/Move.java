@@ -21,20 +21,20 @@ package SimpleBattleship;
  *
  * @author ceckles
  */
-public class FiredMissle {
+public class Move {
 
     private final Player opponent;
     private final int x;
     private final int y;
     private final String onTarget;
-    private final FiredMissle previousMissle;
+    private final Move previousMove;
 
-    public FiredMissle(Player opponent, int x, int y, String onTarget, FiredMissle previousMissle){
+    public Move(Player opponent, int x, int y, String onTarget, Move previousMissle){
         this.opponent = opponent;
         this.x = x;
         this.y = y;
         this.onTarget = onTarget;
-        this.previousMissle = previousMissle;
+        this.previousMove = previousMissle;
     }
 
     public Player getOpponent() {
@@ -53,22 +53,26 @@ public class FiredMissle {
         return onTarget;
     }
 
-    public FiredMissle getPreviousMissle() {
+    public Move getPreviousMove() {
 
-        return previousMissle;
+        return previousMove;
     }
 
-    public Boolean hasPreviousMissle() {
-        return previousMissle != null;
+    public Boolean hasPreviousMove() {
+        return previousMove != null;
     }
     
     @Override
     public String toString(){
-       return opponent.getPlayerName() + ": " + Board.BOARD_X[x] + (y+1) +" - " + (hasPreviousMissle()? "prev:" + previousMissle.toString():"");
+       return opponent.getPlayerName() + ": " + Board.BOARD_X[x] + (y+1) +" - " + (hasPreviousMove()? "prev:" + previousMove.toString():"");
     }
     
     public Boolean isOpponent(Player opponent){
       return this.opponent == opponent;
     }
+    
+    public Boolean isInBounds(){
+        return (x >= 0 && y >= 0 && x < Board.BOARD_X.length && y < Board.BOARD_Y );
+}
 
 }
