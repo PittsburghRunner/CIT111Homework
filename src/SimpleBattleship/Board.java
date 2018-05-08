@@ -35,7 +35,12 @@ public class Board {
     public static final int BOARD_Y = 10;
 
     private static final String OPPONENT_HEADER = "Opponent's Board";
+    public static final String ONE_SPACE = " ";
     public static final String TWO_SPACES = "~~";
+    public static final String THREE_SPACES = "_|_";
+    public static final String BORDER = "*";
+
+
 
     private int piecesLeft = ShipType.values().length;
     private String boardName;
@@ -216,29 +221,45 @@ public class Board {
 
     public void printBoard(Boolean isSelf) {
         String boardStatus = "";
+        String currentRowStatus = "";
+        int maxRowDigits = String.valueOf(BOARD_Y).length();
+        String maxRowOffset = "";
+        for (int i =0; i < maxRowDigits; i++){
+                maxRowOffset = maxRowOffset+BORDER;
+            }
         for (int yy = 0; yy < Board.BOARD_Y; yy++) {
+            currentRowStatus = "";
+            String rowOffset = "";
+            String rowNumber = String.valueOf(yy+1);
+            int yyDigits = String.valueOf(rowNumber).length();
+            for (int i =0; i < maxRowDigits - yyDigits; i++){
+                rowOffset = rowOffset+BORDER;
+            }
+            currentRowStatus = rowOffset + rowNumber;
             for (int xx = 0; xx < Board.BOARD_X.length; xx++) {
                 if (!(board[yy][xx].getStatus().equals(Ship.HIT) || board[yy][xx].getStatus().equals(Ship.MISSED)) && !isSelf) {
-                    boardStatus = boardStatus + TWO_SPACES + Location.EMPTY;
+                    currentRowStatus = currentRowStatus + TWO_SPACES + Location.EMPTY;
                 } else if (board[yy][xx].getStatus().equals(Ship.HIT) && board[yy][xx].getOccupiedBy().getShipSectionsLeft() == 0) {
-                    boardStatus = boardStatus + TWO_SPACES + board[yy][xx].getOccupiedBy().getShipType().getIdentifier();
+                    currentRowStatus = currentRowStatus + TWO_SPACES + board[yy][xx].getOccupiedBy().getShipType().getIdentifier();
                 } else {
-                    boardStatus = boardStatus + TWO_SPACES + board[yy][xx].getStatus();
+                    currentRowStatus = currentRowStatus + TWO_SPACES + board[yy][xx].getStatus();
                 }
             } //end x
-            boardStatus = boardStatus + TWO_SPACES + TWO_SPACES + ((yy + 1)) + "\n";
+            
+      
+            boardStatus = boardStatus + currentRowStatus  + TWO_SPACES  + "\n";
 
         } //end y
-        String boardFooter = "";
+        String xHeader = maxRowOffset;
         for (String xLabels : BOARD_X) {
-            boardFooter = boardFooter + TWO_SPACES + xLabels;
+            xHeader = xHeader + TWO_SPACES + xLabels;
         }
         int borderLength;
-        String border = "";;
+        String border = "";
         if (!isSelf) {
             borderLength = ((Double) Math.floor(((BOARD_X.length + (BOARD_X.length * TWO_SPACES.length())) - OPPONENT_HEADER.length()) / 2)).intValue();
             for (int i = 0; i < borderLength; i++) {
-                border = border + "*";
+                border = border + BORDER;
             }
             System.out.println(border + TWO_SPACES + OPPONENT_HEADER + TWO_SPACES + border);
         }
@@ -247,9 +268,9 @@ public class Board {
         for (int i = 0; i < borderLength; i++) {
             border = border + "*";
         }
-        System.out.println(border + TWO_SPACES + boardName + TWO_SPACES + border);
+        System.out.println(maxRowOffset + border + ONE_SPACE + boardName + ONE_SPACE + border);
+        System.out.println(xHeader);
         System.out.println(boardStatus);
-        System.out.println(boardFooter);
 
     }//end printbaord
 
