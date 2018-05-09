@@ -56,7 +56,7 @@ public class SimpleBattleShip {
 
         
         for (int i = 1; i <= NUMBER_OF_PLAYERS; i++) {
-            String n = getUserInput("Player " + i + "'s Name. \nType 'Computer' to play against it.", 3, Board.BOARD_X.length * 2);
+            String n = getUserInput("Player " + i + "'s Name. \nType 'Computer' to play against it.\n", 3, Board.BOARD_X.length * 2);
             //String n = "Computer " + i;
             players.add(new Player(n));
             System.out.print("\033[H\033[2J");  

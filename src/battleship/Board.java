@@ -111,7 +111,8 @@ public class Board {
                     }
                     set = false;
                     while (!set) {
-                        System.out.print("Enter a Location \n(Range: " + Board.BOARD_X[0] + "-" + Board.BOARD_X[Board.BOARD_X.length - 1] + " and 1-" + Board.BOARD_Y + "): ");
+                        printWithBorder("Enter a Location");
+                        printWithBorder("Range: " + Board.BOARD_X[0] + "-" + Board.BOARD_X[Board.BOARD_X.length - 1] + " and 1-" + Board.BOARD_Y + "): ");
                         //System.out.println("Enter a location:");
                         locationInput = scanner.next();
                         if (locationInput.matches("[a-zA-Z][0-9]+")) {
