@@ -40,6 +40,9 @@ public class Player {
     public Player(String name) {
         this.moves = new ArrayList<>();
         playerName = name;
+        if (name.toLowerCase().contains("grant")|| name.toLowerCase().contains("fred") || name.toLowerCase().contains("eri")){
+            System.out.println("Thats a horrible name. ;-)");
+        }
         this.isComputer = name.trim().toLowerCase().contains(COMPUTER_STRING);
         this.playerBoard = new Board(this);
     }
