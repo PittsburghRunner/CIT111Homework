@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package SimpleBattleship;
+package battleship;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +42,10 @@ public class SimpleBattleShip {
 
     public static boolean endGame = false;
 
+    /**
+     * Runs the main program.
+     * @param args Arguments are ignored.
+     */
     public static void main(String[] args) {
 
         Board.printWithBorder("");
@@ -64,7 +68,7 @@ public class SimpleBattleShip {
             for (Player player : players) {
                 for (Player opponent : players) {
                     if (!opponent.equals(player) && !opponent.isGameOver() && !endGame) {
-                        makeAGuess(player, opponent);
+                        fireAMissle(player, opponent);
                     }
                     if (opponent.isGameOver()) {
                         //System.out.println("End Of Game");
@@ -85,7 +89,13 @@ public class SimpleBattleShip {
         }
     }
 
-    public static Boolean makeAGuess(Player player, Player opponent) {
+    /**
+     *
+     * @param player player who's turn it is
+     * @param opponent player to fire at
+     * @return if the fire was successful
+     */
+    public static Boolean fireAMissle(Player player, Player opponent) {
         Boolean validGuess = false;
         String guess;
         String string_x;
@@ -177,6 +187,10 @@ public class SimpleBattleShip {
 
     }
 
+    /**
+     *
+     * @param timeInSeconds sleep time!
+     */
     public static void sleep(int timeInSeconds) {
         int timeInms = (timeInSeconds * 1000);
         try {

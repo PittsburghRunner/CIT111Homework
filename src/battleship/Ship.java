@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package SimpleBattleship;
+package battleship;
 
 /**
- *
+ * 
  * @author christopher.eckles
  */
 public class Ship {
@@ -32,16 +32,17 @@ public class Ship {
     private int shipDirection;
     private int shipSectionsLeft;
 
-    public int getShipDirection() {
-        return shipDirection;
-    }
-
+    //Constructor for new Ships
     public Ship(int id, ShipType shipType) {
         this.shipId = id;
         this.shipType = shipType;
         this.shipSectionsLeft = shipType.getSize();
     }
-
+    
+    public int getShipDirection() {
+        return shipDirection;
+    }
+    
     public int getShipId() {
         return shipId;
     }
@@ -49,6 +50,12 @@ public class Ship {
     public ShipType getShipType() {
         return this.shipType;
     }
+
+    /**
+     * this reduces the section number by 1
+     * and determines if a players ship can be.
+     * @return
+     */
     public boolean decrementShipSectionsLeft() {
         if (shipSectionsLeft > 0) {
             shipSectionsLeft--;

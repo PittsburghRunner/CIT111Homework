@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package SimpleBattleship;
+package battleship;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -52,6 +52,7 @@ public class Board {
     private Ship[] fleet = new Ship[ShipType.values().length];
     private Location board[][];
 
+    //Constructor for Board
     Board(Player player) {
         // build board 
         setBoardSize(BOARD_X.length, BOARD_Y);
@@ -157,10 +158,20 @@ public class Board {
 
     }
 
+    /**
+     *
+     * @return String of this Board's name.
+     */
     public String getBoardName() {
         return this.boardName;
     }
 
+    /**
+     *
+     * @param x coordinate
+     * @param y coordinate
+     * @return Location object in that place
+     */
     public Location getLocation(int x, int y) {
         if (SimpleBattleShip.DEBUG) {
             System.out.println("getLocation: " + BOARD_X[x] + (y + 1));
@@ -174,6 +185,7 @@ public class Board {
         return null;
     }
 
+    
     private Boolean setShipLocation(int id, int x, int y, int direction, Ship ship) {
         if (direction == EAST_TO_WEST) {
             for (int xx = x; xx < x + ship.getShipType().getSize(); xx++) {
@@ -226,6 +238,13 @@ public class Board {
         this.fleet = fleet;
     }
 
+    /**
+     *
+     * @param isSelf < if the player is printing for themself or another player is calling it. 
+     * We use this to make sure players don't cheat.
+     * The board will show which ships are where during placement process.
+     * and when an entire ship is sank.
+     */
     public void printBoard(Boolean isSelf) {
         String boardStatus = "";
         String currentRowStatus = "";
@@ -300,6 +319,13 @@ public class Board {
         return false;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return returns if the coordinates provided
+     * are within the bounds of the board.
+     */
     public Boolean isInBounds(int x, int y) {
         return (x >= 0 && y >= 0 && x < Board.BOARD_X.length && y < Board.BOARD_Y);
     }

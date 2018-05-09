@@ -15,39 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package SimpleBattleship;
+package battleship;
+
+import java.util.List;
 
 /**
  *
  * @author ceckles
  */
-public enum ShipType {
-    CARRIER(5, "Carrier", "C"), BATTLESHIP(4, "Battleship", "B"), SUBMARINE(
-            3, "Submarine", "S"), CRUISER(3, "Cruiser", "c"), DESTROYER(2,
-            "Destroyer", "d");
-
-    private final int SIZE;
-    private final String MODEL;
-    private final String IDENTIFIER;
-
-    ShipType(int length, String name, String identifier) {
-        this.SIZE = length;
-        this.MODEL = name;
-        this.IDENTIFIER = identifier;
-    }
-
-    public int getSize() {
-        return SIZE;
-    }
-
-    public String getModel() {
-        return MODEL;
-    }
+public class ComputerAI {
     
-    public String getIdentifier() {
-        return IDENTIFIER;
+    public Move spiderGuess(Player player, Player opponent) {
+        Move previousMissle = player.getLastMove(opponent);
+        List<Move> nextMove = Direction.possibleDirections(previousMissle);
+        for (Move possibleMove : nextMove) {
+        if(possibleMove.isInBounds())         
+        return possibleMove;
+        } 
+        return null;   
     }
-
-
-
 }
