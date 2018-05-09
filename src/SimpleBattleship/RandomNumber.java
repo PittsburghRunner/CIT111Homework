@@ -25,19 +25,6 @@ import java.util.Random;
  */
 public class RandomNumber {
 
-    public static void main(String[] args) {
-        System.out.println(generateRandomLocation(2));
-        System.out.println(generateRandomLocation(2));
-
-        System.out.println(generateRandomLocation(2));
-
-        System.out.println(generateRandomLocation(2));
-        System.out.println(generateRandomLocation(2));
-
-        System.out.println(generateRandomLocation(2));
-
-    }
-
     // generate a random number
     public static int generateRandomLocation(int maxInt) {
         // create a new random number object

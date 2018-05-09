@@ -30,10 +30,10 @@ public enum ShipType {
     private final String MODEL;
     private final String IDENTIFIER;
 
-    ShipType(int length, String name, String identifyer) {
+    ShipType(int length, String name, String identifier) {
         this.SIZE = length;
         this.MODEL = name;
-        this.IDENTIFIER = identifyer;
+        this.IDENTIFIER = identifier;
     }
 
     public int getSize() {

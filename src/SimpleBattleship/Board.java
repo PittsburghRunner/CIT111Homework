@@ -51,7 +51,6 @@ public class Board {
     private String boardName;
     private Ship[] fleet = new Ship[ShipType.values().length];
     private Location board[][];
-    //TODO: multidimentional array
 
     Board(Player player) {
         // build board 
@@ -267,8 +266,7 @@ public class Board {
 
             boardStatus = boardStatus + currentRowStatus + GRID_SPACING + "\n" + xPiping + "\n";
 
-        } //end y
-        
+        } //end y 
         if (!isSelf) {
            printWithBorder(OPPONENT_HEADER);
         }

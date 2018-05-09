@@ -37,17 +37,13 @@ public class Ship {
     }
 
     public Ship(int id, ShipType shipType) {
-        setShipId(id);
+        this.shipId = id;
         this.shipType = shipType;
-        shipSectionsLeft = shipType.getSize();
+        this.shipSectionsLeft = shipType.getSize();
     }
 
     public int getShipId() {
         return shipId;
-    }
-
-    private void setShipId(int shipId) {
-        this.shipId = shipId;
     }
 
     public ShipType getShipType() {

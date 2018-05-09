@@ -36,16 +36,12 @@ public class Player {
     private Boolean isGameOver = false;
     private List<Move> moves;
 
-    //constructor
+    //Constructor
     public Player(String name) {
         this.moves = new ArrayList<>();
-        this.setPlayerName(name);
+        playerName = name;
         this.isComputer = name.trim().toLowerCase().contains(COMPUTER_STRING);
         this.playerBoard = new Board(this);
-    }
-
-    private void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     public Board getPlayerBoard() {
